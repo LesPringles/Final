@@ -11,7 +11,7 @@ void file_selection_load();
 void recuperer_chemin(GtkWidget *bouton, GtkWidget *file_selection);
 GtkWidget* CreateMenu(GtkWidget* widget);
 GtkWidget* Create_toolbar();
-GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img);
+//GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img);
 void *run(void *arg);
 void change_color(GtkWidget* widget, gpointer data);
 void Function(GtkWidget* widget, gpointer data);
@@ -20,6 +20,7 @@ void Redo(GtkWidget* widget, gpointer data);
 void Clear(GtkWidget* widget, gpointer data);
 void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
+void quit();
 
 static GtkWidget *pRadioLabel;
 static GtkWidget *pCheckLabel;
@@ -63,7 +64,7 @@ int main(int argc, char **argv)
 	pWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(pWindow), "Apéro");
 	gtk_window_set_default_size(GTK_WINDOW(pWindow), 0, 0);
-	g_signal_connect(G_OBJECT(pWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	g_signal_connect(G_OBJECT(pWindow), "destroy", G_CALLBACK(quit), NULL);
 	    // Création de la GtkVBox 
 	pVBox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(pWindow), pVBox);
@@ -90,8 +91,8 @@ int main(int argc, char **argv)
 	gtk_box_pack_start(GTK_BOX(pVBox2), pTearoffLabel, TRUE, TRUE, 0);
 	*/				
 
-	pSdl = sdl_surface_to_GtkWidget(display.screen);
-	gtk_box_pack_start(GTK_BOX(pVBox), pSdl, FALSE, FALSE, 0);
+	//pSdl = sdl_surface_to_GtkWidget(display.screen);
+	//gtk_box_pack_start(GTK_BOX(pVBox), pSdl, FALSE, FALSE, 0);
 
 	  /* Ajout du menu a la fenêtre */
 	gtk_box_pack_start(GTK_BOX(pVBox), pMenuBar, FALSE, FALSE, 0);
@@ -487,7 +488,7 @@ void Open(GtkWidget *bouton, GtkWidget *file_selection)
 	gtk_widget_destroy(file_selection);
 }
 
-GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img)
+/*GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img)
 {
     SDL_LockSurface(img);
     GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data
@@ -504,7 +505,7 @@ GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img)
         );
     SDL_UnlockSurface(img);
     return gtk_image_new_from_pixbuf(pixbuf);
-} 
+} */
 
 void *run(void *arg){
 	if(arg != NULL)
@@ -578,4 +579,10 @@ void Undo(GtkWidget* widget, gpointer data)
 void Clear(GtkWidget* widget, gpointer data)
 {
 	new(display.screen);
+}
+
+void quit()
+{
+	SDL_Quit();
+	gtk_main_quit();
 }

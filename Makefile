@@ -1,11 +1,12 @@
 CC=gcc
-CFLAGS= -W -Wall -Wextra -std=gnu99
+CFLAGS= -W -Wall -Wextra -std=gnu99 $(GTK)
 GTK= `pkg-config --cflags --libs gtk+-2.0`
 SDL += -lSDL -lSDL_mixer -lm
 
 EXEC=apero
 
-SRCS = ./sources/layers.c		\
+SRCS = ./sources/interface.c	\
+		./sources/layers.c		\
 	  ./sources/sdl_init.c		\
 	  ./sources/print_pixel.c	\
 	  ./sources/print_ligne.c	\
@@ -22,12 +23,8 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(EXEC)
 
-$(EXEC): interface.o $(OBJS)
+$(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(GTK) $(SDL)
-
-
-interface.o: interface.c
-	$(CC) $(CFLAGS) -o $@ -c $^ $(GTK)
 
 clean:
 	rm -f *.o

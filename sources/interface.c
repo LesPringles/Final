@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "../includes/interface.h"
 #define UTF8(string) g_locale_to_utf8(string, -1, NULL, NULL, NULL)
 
 void OnQuitter(GtkWidget* widget, gpointer data);
@@ -525,7 +525,7 @@ color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
 
 	if(strcmp(color, "RED") == 0)
-		display.color_index = 0;
+		display.color_index = 6;
 	else if(strcmp(color, "BLUE") == 0)
 		display.color_index = 1;
 	else if(strcmp(color, "GREEN") == 0)
@@ -537,7 +537,7 @@ color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 	else if(strcmp(color, "PURPLE")==0)
 		display.color_index = 5;
 	else if(strcmp(color, "BLACK") == 0)
-		display.color_index = 6;
+		display.color_index = 0;
 	else if(strcmp(color, "WHITE") == 0)
 		display.color_index = 7;
 	else if(strcmp(color, "GREY") == 0)

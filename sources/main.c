@@ -1,8 +1,12 @@
-#include "../includes/display.h"
+#include <gtk/gtk.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "interface.h"
 
-int	main()
+int main(int argc, char *argv)
 {
-  if (init_sdl() == -1)
-    return 1;
-  return 0;
+	interface(argc, argv);
+	
+	return 0;
 }

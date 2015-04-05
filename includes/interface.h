@@ -11,10 +11,9 @@
 #include <string.h>
 #include <SDL/SDL.h>
 
-#include "./includes/display.h"
-#include "./includes/shapes.h"
-#include "./includes/couleurs.h"
+#include "display.h"
+#include "shapes.h"
+#include "couleurs.h"
 
-//extern int main(int argc, char **argv);
 
 #endif

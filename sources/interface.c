@@ -28,6 +28,10 @@ void FilterInv(GtkWidget* widget, gpointer data);
 void FilterBlue(GtkWidget* widget, gpointer data);
 void FilterGreen(GtkWidget* widget, gpointer data);
 void FilterRed(GtkWidget* widget, gpointer data);
+void FilterLumPlus(GtkWidget* widget, gpointer data);
+void FilterLumMoins(GtkWidget* widget, gpointer data);
+
+
 
 
 
@@ -449,6 +453,16 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterRed), NULL);
 
+	pMenuItem = gtk_menu_item_new_with_label( "FilterLum+");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterLumPlus), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "FilterLum-");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterLumMoins), NULL);
+
+
+
 		/* ETAPE 4*/
 	pMenuItem = gtk_menu_item_new_with_label("Filter");
 		/* ETAPE 5*/
@@ -646,6 +660,19 @@ void FilterRed(GtkWidget* widget, gpointer data)
 		filtre_rouge(display);	
 
 }
+
+void FilterLumPlus(GtkWidget* widget, gpointer data)
+{
+		filtre_lum_plus(display);	
+
+}
+
+void FilterLumMoins(GtkWidget* widget, gpointer data)
+{
+		filtre_lum_moins(display);	
+
+}
+
 
 
 void Redo(GtkWidget* widget, gpointer data)

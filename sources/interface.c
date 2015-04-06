@@ -610,9 +610,9 @@ void FilterG(GtkWidget* widget, gpointer data)
 			filtre_gris(display);	
 }
 
-void Filter3(GtkWidget* widget, gpointer data)
+void FilterInv(GtkWidget* widget, gpointer data)
 {
-		filtre_gris(display);	
+		filtre_inverser(display);	
 
 }
 

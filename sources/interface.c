@@ -24,7 +24,7 @@ void quit();
 void Rotate(GtkWidget* widget, gpointer data);
 void FilterBW(GtkWidget* widget, gpointer data);
 void FilterG(GtkWidget* widget, gpointer data);
-void Filter3(GtkWidget* widget, gpointer data);
+void FilterInv(GtkWidget* widget, gpointer data);
 void Filter4(GtkWidget* widget, gpointer data);
 
 static GtkWidget *pRadioLabel;
@@ -429,9 +429,9 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterG), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Filter3");
+	pMenuItem = gtk_menu_item_new_with_label( "FilterInv");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
-	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter3), NULL);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterInv), NULL);
 
 	pMenuItem = gtk_menu_item_new_with_label( "Filter4");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);

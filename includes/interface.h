@@ -10,10 +10,13 @@
 #include <gtk/gtk.h>
 #include <string.h>
 #include <SDL/SDL.h>
+#include <SDL/SDL_rotozoom.h>
+
 
 #include "display.h"
 #include "shapes.h"
 #include "couleurs.h"
+
 
 
 #endif

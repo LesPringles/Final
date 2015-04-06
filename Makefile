@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS= -W -Wall -Wextra -std=gnu99 $(GTK)
 GTK= `pkg-config --cflags --libs gtk+-2.0`
-SDL += -lSDL -lSDL_mixer -lm
+SDL += -lSDL -lSDL_mixer -lSDL_gfx -lm
 
 EXEC=apero
 
@@ -15,8 +15,10 @@ SRCS = ./sources/interface.c	\
 	  ./sources/print_circle.c	\
 	  ./sources/print_disc.c	\
 	  ./sources/do_action.c		\
-	  ./sources/save.c		\
-	  ./sources/new.c		\
+	  ./sources/save.c			\
+	  ./sources/new.c			\
+	  ./sources/rotation.c 		\
+	  ./sources/filtres.c		\
 	  ./sources/tracing.c
 
 OBJS = $(SRCS:.c=.o)

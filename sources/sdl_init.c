@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 
-#include "../includes/display.h"
-#include "../includes/shapes.h"
-#include "../includes/couleurs.h"
+#include "../includes/interface.h"
 
 static int	manage_mouse_event(SDL_Event *event, t_display *display)
 {
@@ -42,7 +40,7 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
   switch ((int)event->key.keysym.sym)
     {
     case SDLK_ESCAPE:
-      return 1;
+      //return 1;
       break;
     case SDLK_SPACE:
       display->button = RELEASED;
@@ -57,9 +55,6 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
     case SDLK_n:
       if (new(display->screen) == -1)
 	return -1;
-      break;
-    case SDLK_o:
-      //TODO Ouvrir une image
       break;
     case SDLK_BACKSPACE:
       if (undo(display) == -1)
@@ -79,6 +74,13 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
     case SDLK_t:
       //TODO Changerla taille du pinceau
       break;
+	case SDLK_r:
+	 if (new(display->screen) == -1)
+		return -1;
+
+	 if (rot(display) == -1)
+		return -1;
+	  break;
 
     default:
       break;
@@ -110,31 +112,3 @@ static int	manage_event(SDL_Event *event, t_display *display)
   return 0;
 }
 
-/*
-int		init_sdl()
-{
-  SDL_Rect	pos;
-  t_display	display;
-
-  display.layers = NULL;
-  display.action = PRINT_PIXEL;
-  display.button = RELEASED;
-  SDL_Init(SDL_INIT_VIDEO);
-
-  display.screen = SDL_SetVideoMode(WINX, WINY, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
- 
- 	new(display.screen);
-	SDL_WM_SetCaption("Apero", NULL);
-
-  pos.x = 0;
-  pos.y = 0;
-  add_layer(&display.layers, display.screen, &pos);
-
-  display.color_index = 0;
- 
-	
-	sdl_loop(&display);
-  SDL_Quit();
-
-  return 0;
-} */

@@ -21,6 +21,8 @@ void Clear(GtkWidget* widget, gpointer data);
 void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
 void quit();
+void Rotate(GtkWidget* widget, gpointer data);
+void Filter(GtkWidget* widget, gpointer data);
 
 static GtkWidget *pRadioLabel;
 static GtkWidget *pCheckLabel;
@@ -223,9 +225,9 @@ GtkWidget* Create_toolbar()
 	/* Creation a partir de stock */
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_REFRESH,
-		"Refresh",
+		"Rotate",
 		NULL,
-		NULL,
+		G_CALLBACK(Rotate),
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
@@ -289,6 +291,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	GtkWidget *pMenuBar;
 	GSList *pList;
 	GSList *pList2;
+	GSList *pList3;
 	GSList *pListC;
 	char *color[] = {
 					"BLACK",
@@ -330,6 +333,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 
 	pMenuItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_CLOSE,NULL);
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(quit), NULL);
 	//fermer l'image/widget sdl
 																											 																									 
 		/* GtkSeparatorItem */
@@ -411,7 +415,38 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 		/* ETAPE 6*/
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
 
-	/** Quatrieme sous-menu **/
+	/** Quatrieme sous-menu**/
+		/* ETAPE 2*/
+	pMenu = gtk_menu_new();
+		/* ETAPE 3*/
+	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Filter1");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList3 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+//	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
+
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList3, "Filter2");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList3 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+//	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
+
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList3, "Filter3");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList3 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	//g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
+
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList3, "Filter4");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList3 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+//	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
+
+		/* ETAPE 4*/
+	pMenuItem = gtk_menu_item_new_with_label("Filter");
+		/* ETAPE 5*/
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(pMenuItem), pMenu);
+		/* ETAPE 6*/
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
+
+	/** Cinquieme sous-menu **/
 	  /* ETAPE 2 */
 	pMenu = gtk_menu_new();
 	  /* ETAPE 3 */
@@ -566,6 +601,22 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 5;
 }
 
+void Filter(GtkWidget* widget, gpointer data)
+{
+const char *filtre;
+filtre = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
+/*
+	if(strcmp(filtre, "Filter1")==0)
+					//fonction filtre1
+	else if(strcmp(flitre, "Filtre2")==0)
+					//fonction filtre2
+	else if(strcmp(flitre, "Filtre3")==0)
+					//fonction filtre3
+	else if(strcmp(flitre, "Filtre4")==0)
+					//fonction filtre4
+*/
+}
+
 void Redo(GtkWidget* widget, gpointer data)
 {
 		redo(&display);
@@ -585,4 +636,9 @@ void quit()
 {
 	SDL_Quit();
 	gtk_main_quit();
+}
+
+void Rotate(GtkWidget* widget, gpointer data)
+{
+// fonction rotation	
 }

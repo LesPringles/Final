@@ -25,7 +25,11 @@ void Rotate(GtkWidget* widget, gpointer data);
 void FilterBW(GtkWidget* widget, gpointer data);
 void FilterG(GtkWidget* widget, gpointer data);
 void FilterInv(GtkWidget* widget, gpointer data);
-void Filter4(GtkWidget* widget, gpointer data);
+void FilterBlue(GtkWidget* widget, gpointer data);
+void FilterGreen(GtkWidget* widget, gpointer data);
+void FilterRed(GtkWidget* widget, gpointer data);
+
+
 
 static GtkWidget *pRadioLabel;
 static GtkWidget *pCheckLabel;
@@ -433,9 +437,17 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterInv), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Filter4");
+	pMenuItem = gtk_menu_item_new_with_label( "FilterBlue");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
-	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter4), NULL);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterBlue), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "FilterGreen");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterGreen), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "FilterRed");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterRed), NULL);
 
 		/* ETAPE 4*/
 	pMenuItem = gtk_menu_item_new_with_label("Filter");
@@ -616,11 +628,24 @@ void FilterInv(GtkWidget* widget, gpointer data)
 
 }
 
-void Filter4(GtkWidget* widget, gpointer data)
+void FilterBlue(GtkWidget* widget, gpointer data)
 {
-		filtre_gris(display);	
+		filtre_bleu(display);	
 
 }
+
+void FilterGreen(GtkWidget* widget, gpointer data)
+{
+		filtre_vert(display);	
+
+}
+
+void FilterRed(GtkWidget* widget, gpointer data)
+{
+		filtre_rouge(display);	
+
+}
+
 
 void Redo(GtkWidget* widget, gpointer data)
 {

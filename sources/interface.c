@@ -422,12 +422,12 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Filter1");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList3 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
-//	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
 
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList3, "Filter2");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList3 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
-//	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Filter), NULL);
 
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList3, "Filter3");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
@@ -604,19 +604,20 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 void Filter(GtkWidget* widget, gpointer data)
 {
 const char *filtre;
-filtre = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
-/*
-	if(strcmp(filtre, "Filter1")==0)
-					//fonction filtre1
+
+/*	if(strcmp(filtre, "Filter1")==0)
+					
 	else if(strcmp(flitre, "Filtre2")==0)
 					//fonction filtre2
 	else if(strcmp(flitre, "Filtre3")==0)
 					//fonction filtre3
 	else if(strcmp(flitre, "Filtre4")==0)
-					//fonction filtre4
-*/
-}
+					//fonction filtre4*/
+		
+	 SDL_BlitSurface(filtre_noir_blanc(display), NULL, display.screen, NULL);
+	SDL_Flip(display.screen);
 
+}
 void Redo(GtkWidget* widget, gpointer data)
 {
 		redo(&display);

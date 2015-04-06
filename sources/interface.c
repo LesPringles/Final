@@ -529,6 +529,7 @@ void Open(GtkWidget *bouton, GtkWidget *file_selection)
 {
 	const gchar* chemin;
 	chemin = gtk_file_selection_get_filename(GTK_FILE_SELECTION (file_selection) );
+	new(display.screen);
 	SDL_BlitSurface(SDL_LoadBMP(chemin), NULL, display.screen, NULL);
 	gtk_widget_destroy(file_selection);
 }
@@ -670,5 +671,6 @@ void quit()
 
 void Rotate(GtkWidget* widget, gpointer data)
 {
-// fonction rotation	
+	
+	rotate_surface(display.screen, -90.0);				
 }

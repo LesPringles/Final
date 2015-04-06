@@ -1,27 +1,16 @@
 #include "../includes/interface.h"
 
-int rot(t_display *display)
-{
-	SDL_Surface *tmp = NULL;
-	SDL_Rect rect;
-    SDL_Event event; 
-	tmp = rotozoomSurface(display->screen, 90, 1, 0);
+void rotate_surface(SDL_Surface *picture,double angle) 
+{ 
+	SDL_Surface *rotation = NULL;
 
-	//display->screen = tmp;
-	rect.x =  event.button.x - tmp->w / 2;
-    rect.y =  event.button.y - tmp->h / 2;
+	rotation = rotozoomSurface(picture, angle, 1.0, 0); 
 
-	SDL_BlitSurface(tmp, NULL, display->screen, &rect); //On affiche la rotation de la surface image.
-    SDL_FreeSurface(tmp);
-	SDL_Flip(display->screen);
-
-	/*if (SDL_BlitSurface(tmp, NULL, display->screen, NULL) == -1)
-		return -1;
-
-	if (SDL_Flip(display->screen) == -1)
-		return -1;*/
-
-	
-	return 0;
-
+	new(picture);
+	SDL_BlitSurface(rotation, NULL, picture, NULL); 
+	SDL_FreeSurface(rotation); 
+	SDL_Flip(picture);
+	//correction rotation noir???
 }
+
+

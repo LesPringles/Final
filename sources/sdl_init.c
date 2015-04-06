@@ -78,7 +78,7 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
 	 if (new(display->screen) == -1)
 		return -1;
 
-	 if (rot(display) == -1)
+	 if (rotate_surface(display) == -1)
 		return -1;
 	  break;
 

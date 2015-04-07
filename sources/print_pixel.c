@@ -9,6 +9,11 @@ int			print_pixel(t_display *display, void *param)
   SDL_MouseButtonEvent	*mouse;
   SDL_Surface		*pixel;
   SDL_Rect		pos;
+  SDL_Rect		pos_0;
+
+  pos_0.x = 0;
+  pos_0.y = 0;
+
 
   if (display->button == RELEASED)
     return (0);
@@ -21,5 +26,10 @@ int			print_pixel(t_display *display, void *param)
     return -1;
   if (SDL_BlitSurface(pixel, NULL, display->screen, &pos) == -1)
     return -1;
+  
+  if (add_layer(&display->layers, display->screen, &pos_0) == -1)
+	return -1;
+
+
   return SDL_Flip(display->screen);
 }

@@ -1,35 +1,7 @@
 #include "../includes/interface.h"
 #define UTF8(string) g_locale_to_utf8(string, -1, NULL, NULL, NULL)
 
-void OnQuitter(GtkWidget* widget, gpointer data);
-void OnAbout(GtkWidget* widget, gpointer data);
-void OnRadio(GtkWidget* widget, gpointer data);
-void OnTearoff(GtkWidget* widget, gpointer data);
-void OnCheck(GtkWidget* widget, gpointer data);
-void file_selection_save();
-void file_selection_load();
-void recuperer_chemin(GtkWidget *bouton, GtkWidget *file_selection);
-GtkWidget* CreateMenu(GtkWidget* widget);
-GtkWidget* Create_toolbar();
-//GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img);
-void *run(void *arg);
 void change_color(GtkWidget* widget, gpointer data);
-void Function(GtkWidget* widget, gpointer data);
-void Undo(GtkWidget* widget, gpointer data);
-void Redo(GtkWidget* widget, gpointer data);
-void Clear(GtkWidget* widget, gpointer data);
-void Save(GtkWidget* widget, GtkWidget* file_selection);
-void Open(GtkWidget* widget, GtkWidget* file_selection);
-void quit();
-void Rotate(GtkWidget* widget, gpointer data);
-void FilterBW(GtkWidget* widget, gpointer data);
-void FilterG(GtkWidget* widget, gpointer data);
-void FilterInv(GtkWidget* widget, gpointer data);
-void FilterBlue(GtkWidget* widget, gpointer data);
-void FilterGreen(GtkWidget* widget, gpointer data);
-void FilterRed(GtkWidget* widget, gpointer data);
-void FilterLumPlus(GtkWidget* widget, gpointer data);
-void FilterLumMoins(GtkWidget* widget, gpointer data);
 
 
 
@@ -47,9 +19,6 @@ int main(int argc, char **argv)
 	GtkWidget *pMenuBar;
 	GtkWidget *pToolBar;
 	GtkWidget *pVBox;
-	GtkWidget *pVBox2;
-	GtkWidget *pSdl;
-	gchar *sTempLabel;	
 
 	gtk_init(&argc, &argv);
   	
@@ -87,32 +56,11 @@ int main(int argc, char **argv)
 		//Creation de la Toolbar
 	pToolBar = Create_toolbar();
 	
-/* Creation de la deuxieme GtkVBox (pour les labels) */
-  pVBox2 = gtk_vbox_new(FALSE, 0);
-	/*	 
-  pRadioLabel = gtk_label_new("Radio 1 est actif");
-	gtk_box_pack_start(GTK_BOX(pVBox2), pRadioLabel, TRUE, TRUE, 0);
-					  
-	sTempLabel = g_locale_to_utf8("Check est décoché", -1, NULL, NULL, NULL);
-	pCheckLabel = gtk_label_new(sTempLabel);
-	g_free(sTempLabel);
-	gtk_box_pack_start(GTK_BOX(pVBox2), pCheckLabel, TRUE, TRUE, 0);
-	
-	sTempLabel = g_locale_to_utf8("Menu attaché", -1, NULL, NULL, NULL);
-	pTearoffLabel = gtk_label_new(sTempLabel);
-	g_free(sTempLabel);
-	gtk_box_pack_start(GTK_BOX(pVBox2), pTearoffLabel, TRUE, TRUE, 0);
-	*/				
-
-	//pSdl = sdl_surface_to_GtkWidget(display.screen);
-	//gtk_box_pack_start(GTK_BOX(pVBox), pSdl, FALSE, FALSE, 0);
 
 	  /* Ajout du menu a la fenêtre */
 	gtk_box_pack_start(GTK_BOX(pVBox), pMenuBar, FALSE, FALSE, 0);
 	  /* Ajout du toolbar a la fenetre */
 	gtk_box_pack_start(GTK_BOX(pVBox), pToolBar, FALSE, FALSE, 0);
-		/* Ajout des labels a la fenetre */
-//	gtk_box_pack_start(GTK_BOX(pVBox), pVBox2, TRUE, TRUE, 0);
 																												 
 	gtk_widget_show_all(pWindow);																																	  
 	
@@ -122,10 +70,6 @@ int main(int argc, char **argv)
 	pthread_join(th0, NULL);
 	pthread_join(th1, NULL);
 	
-	/*sdl_loop(&display);
-	gtk_main();*/
-
-
 	SDL_Quit();
 	 return EXIT_SUCCESS;
 }
@@ -285,9 +229,6 @@ GtkWidget* Create_toolbar()
 		NULL,
 		-1);
 
-		/* Modification de la taille des icones*/
-//		gtk_toolbar_set_icon_size(GTK_TOOLBAR(pToolbar),GTK_ICON_SIZE_BUTTON);
-
 
 		/* Affichage uniquement des icones*/
 		gtk_toolbar_set_style(GTK_TOOLBAR(pToolbar),GTK_TOOLBAR_ICONS);
@@ -320,6 +261,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 																		  
 	    /* ETAPE 1 */
 	pMenuBar = gtk_menu_bar_new();
+
 	    /** Premier sous-menu **/
 	    /* ETAPE 2 */
 	pMenu = gtk_menu_new();
@@ -626,68 +568,61 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 5;
 }
 
-void FilterBW(GtkWidget* widget, gpointer data)
+void FilterBW()
 {
-				filtre_noir_blanc(display);
-			
+		filtre_noir_blanc(display);
 }
 
-void FilterG(GtkWidget* widget, gpointer data)
+void FilterG()
 {
-			filtre_gris(display);	
+		filtre_gris(display);	
 }
 
-void FilterInv(GtkWidget* widget, gpointer data)
+void FilterInv()
 {
 		filtre_inverser(display);	
-
 }
 
-void FilterBlue(GtkWidget* widget, gpointer data)
+void FilterBlue()
 {
 		filtre_bleu(display);	
-
 }
 
-void FilterGreen(GtkWidget* widget, gpointer data)
+void FilterGreen()
 {
 		filtre_vert(display);	
-
 }
 
-void FilterRed(GtkWidget* widget, gpointer data)
+void FilterRed()
 {
 		filtre_rouge(display);	
-
 }
 
-void FilterLumPlus(GtkWidget* widget, gpointer data)
+void FilterLumPlus()
 {
 		filtre_lum_plus(display);	
-
 }
 
-void FilterLumMoins(GtkWidget* widget, gpointer data)
+void FilterLumMoins()
 {
 		filtre_lum_moins(display);	
-
 }
 
 
 
-void Redo(GtkWidget* widget, gpointer data)
+void Redo()
 {
 		redo(&display);
 }
 
-void Undo(GtkWidget* widget, gpointer data)
+void Undo()
 {
 		undo(&display);
 }
 
-void Clear(GtkWidget* widget, gpointer data)
+void Clear()
 {
-	new(display.screen);
+		new(display.screen);
 }
 
 void quit()
@@ -696,7 +631,7 @@ void quit()
 	gtk_main_quit();
 }
 
-void Rotate(GtkWidget* widget, gpointer data)
+void Rotate()
 {
-// fonction rotation	
+	// fonction rotation	
 }

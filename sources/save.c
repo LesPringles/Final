@@ -5,7 +5,7 @@
 
 #include "../includes/display.h"
 
-static char	*getFileName(char *name)
+static char	*getFileName(const char *name)
 {
   unsigned int	i;
   int		len;
@@ -26,7 +26,7 @@ static char	*getFileName(char *name)
   return (tmp);
 }
 
-int		save(SDL_Surface *surface, char *filename)
+int		save(SDL_Surface *surface, const char *filename)
 {
   if (SDL_SaveBMP(surface, getFileName(filename)) == -1)
     return -1;

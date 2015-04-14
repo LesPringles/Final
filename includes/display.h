@@ -13,7 +13,8 @@ typedef enum	e_current_action
     PRINT_SQUARE,
     PRINT_RECT,
     PRINT_CIRCLE,
-    PRINT_DISC
+    PRINT_DISC,
+	PRINT_GOMME
   }		t_current_action;
 
 typedef enum	e_button_state
@@ -58,7 +59,7 @@ void	setPixelVerif(t_display *display, int x, int y, Uint32 coul);
 void 	setPixel(t_display *display, int x, int y, Uint32 coul);
 
 
-int		save(SDL_Surface *surface, char *filename);
+int		save(SDL_Surface *surface, const char *filename);
 int		new(SDL_Surface *surface);
 int		undo(t_display *display);
 int		redo(t_display *display);

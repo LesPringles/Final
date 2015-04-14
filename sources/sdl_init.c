@@ -3,6 +3,8 @@
 
 #include "../includes/interface.h"
 
+int 	rotate_surface(t_display *display);
+
 static int	manage_mouse_event(SDL_Event *event, t_display *display)
 {
   (void)display;
@@ -45,10 +47,10 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
     case SDLK_SPACE:
       display->button = RELEASED;
       do_action(display, &event->button);
-      if (display->action == 5)
-	{
-	  display->action = -1;
-	}
+      if (display->action == 6)
+		{
+	  		display->action = -1;
+		}
       display->action = display->action + 1;
 
       break;
@@ -78,7 +80,7 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
 	 if (new(display->screen) == -1)
 		return -1;
 
-	 if (rot(display) == -1)
+	 if (rotate_surface(display) == -1)
 		return -1;
 	  break;
 

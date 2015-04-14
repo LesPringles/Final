@@ -2,6 +2,8 @@
 #define UTF8(string) g_locale_to_utf8(string, -1, NULL, NULL, NULL)
 
 void change_color(GtkWidget* widget, gpointer data);
+int 	rotate_surface(SDL_Surface *surf, double angle);
+
 
 
 
@@ -76,6 +78,7 @@ int main(int argc, char **argv)
 
 void OnRadio(GtkWidget* widget, gpointer data)
 {
+(void)data;
 const gchar *sRadioName;
 gchar *sLabel;
 							 
@@ -89,6 +92,7 @@ gchar *sLabel;
 
 void OnCheck(GtkWidget* widget, gpointer data)
 {
+ (void)data;
  gboolean bCoche;
  gchar *sLabel;
  gchar *sLabelUtf8;
@@ -110,6 +114,7 @@ void OnCheck(GtkWidget* widget, gpointer data)
 
 void OnTearoff(GtkWidget* widget, gpointer data)
 {
+	(void)widget;
 	gboolean bDetache;
 	gchar *sLabel;
 	gchar *sLabelUtf8;
@@ -131,6 +136,7 @@ void OnTearoff(GtkWidget* widget, gpointer data)
 
 void OnQuitter(GtkWidget* widget, gpointer data)
 {
+(void)widget;
 GtkWidget *pQuestion;
 						 
 	pQuestion = gtk_message_dialog_new(GTK_WINDOW(data),
@@ -156,6 +162,7 @@ GtkWidget *pQuestion;
 
 void OnAbout(GtkWidget* widget, gpointer data)
 {
+	(void)widget;
 	GtkWidget *pAbout;
 						 
 	pAbout = gtk_message_dialog_new(GTK_WINDOW(data),
@@ -241,7 +248,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	GtkWidget *pMenu;
 	GtkWidget *pMenuItem;
 	GtkWidget *pMenuBar;
-	GSList *pList;
+	//GSList *pList;
 	GSList *pList2;
 	GSList *pListC;
 	char *color[] = {
@@ -333,6 +340,11 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Disc");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
+
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Gomme");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
@@ -458,6 +470,7 @@ void file_selection_load()
 
 void recuperer_chemin(GtkWidget *bouton, GtkWidget *file_selection)
 {
+	(void)bouton;
     const gchar* chemin;
     GtkWidget *dialog;
     chemin = gtk_file_selection_get_filename(GTK_FILE_SELECTION (file_selection) );
@@ -475,6 +488,7 @@ void recuperer_chemin(GtkWidget *bouton, GtkWidget *file_selection)
 
 void Save(GtkWidget *bouton, GtkWidget *file_selection)
 {
+	(void)bouton;
 	const gchar* chemin;
 	chemin = gtk_file_selection_get_filename(GTK_FILE_SELECTION (file_selection) );
 	save(display.screen, chemin);
@@ -483,11 +497,20 @@ void Save(GtkWidget *bouton, GtkWidget *file_selection)
 
 void Open(GtkWidget *bouton, GtkWidget *file_selection)
 {
+	SDL_Rect		pos_0;
+
+  	pos_0.x = 0;
+  	pos_0.y = 0;
+
+
+	(void)bouton;
 	const gchar* chemin;
 	chemin = gtk_file_selection_get_filename(GTK_FILE_SELECTION (file_selection) );
 	new(display.screen);
 	SDL_BlitSurface(SDL_LoadBMP(chemin), NULL, display.screen, NULL);
 	gtk_widget_destroy(file_selection);
+
+	add_layer(&display.layers, display.screen, &pos_0);
 }
 
 /*GtkWidget* sdl_surface_to_GtkWidget(SDL_Surface* img)
@@ -523,6 +546,7 @@ void *run(void *arg){
 
 void change_color(GtkWidget* widget, gpointer data)
 {
+(void)data;
 const char *color;
 color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
@@ -551,6 +575,7 @@ color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
 void Function(GtkWidget* widget, gpointer data)
 {
+(void)data;
 const char *fonction;
 fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
@@ -566,46 +591,113 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 4;
 	else if(strcmp(fonction, "Disc")==0)
 					display.action = 5;
+	else if(strcmp(fonction, "Gomme")==0)
+					display.action = 6;
+
 }
 
 void FilterBW()
 {
 		filtre_noir_blanc(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterG()
 {
 		filtre_gris(display);	
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterInv()
 {
-		filtre_inverser(display);	
+		filtre_inverser(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterBlue()
 {
 		filtre_bleu(display);	
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterGreen()
 {
-		filtre_vert(display);	
+		filtre_vert(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterRed()
 {
 		filtre_rouge(display);	
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterLumPlus()
 {
-		filtre_lum_plus(display);	
+		filtre_lum_plus(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 void FilterLumMoins()
 {
-		filtre_lum_moins(display);	
+		filtre_lum_moins(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
 }
 
 
@@ -633,5 +725,13 @@ void quit()
 
 void Rotate()
 {
-	// fonction rotation	
+	SDL_Rect		pos_0;
+
+    pos_0.x = 0;
+    pos_0.y = 0;
+
+	rotate_surface(display.screen, -90.0);
+
+	add_layer(&display.layers, display.screen, &pos_0);
+
 }

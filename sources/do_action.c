@@ -8,7 +8,8 @@ static const t_action	actions[] =
     {PRINT_SQUARE, &print_square},
     {PRINT_RECT, &print_rect},
     {PRINT_CIRCLE, &print_circle},
-    {PRINT_DISC, &print_disc}
+    {PRINT_DISC, &print_disc},
+  	{PRINT_GOMME, &print_gomme}
   };
 
 int		do_action(t_display *display, void *param)

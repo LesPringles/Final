@@ -5,41 +5,43 @@
 
 void ellipse(t_display *display, int cx, int cy, int width, int height, Uint32 coul)
 {
-  
-  	int a2 = width * width;
-    int b2 = height * height;
-    int fa2 = 4 * a2, fb2 = 4 * b2;
-    int x, y, sigma;
 
-    /* first half */
-    for (x = 0, y = height, sigma = 2*b2+a2*(1-2*height); b2*x <= a2*y; x++)
+  int a2 = width * width;
+  int b2 = height * height;
+  int fa2 = 4 * a2, fb2 = 4 * b2;
+  int x, y, sigma;
+
+  if (!width || !height)
+    return ;
+  /* first half */
+  for (x = 0, y = height, sigma = 2*b2+a2*(1-2*height); b2*x <= a2*y; x++)
     {
-        setPixelVerif(display, cx + x, cy + y, coul);
-        setPixelVerif(display, cx - x, cy + y, coul);
-        setPixelVerif(display, cx + x, cy - y, coul);
-        setPixelVerif(display, cx - x, cy - y, coul);
-        if (sigma >= 0)
+      setPixelVerif(display, cx + x, cy + y, coul);
+      setPixelVerif(display, cx - x, cy + y, coul);
+      setPixelVerif(display, cx + x, cy - y, coul);
+      setPixelVerif(display, cx - x, cy - y, coul);
+      if (sigma >= 0)
         {
-            sigma += fa2 * (1 - y);
-            y--;
+	  sigma += fa2 * (1 - y);
+	  y--;
         }
-        sigma += b2 * ((4 * x) + 6);
+      sigma += b2 * ((4 * x) + 6);
     }
 
-    /* second half */
-    for (x = width, y = 0, sigma = 2*a2+b2*(1-2*width); a2*y <= b2*x; y++)
+  /* second half */
+  for (x = width, y = 0, sigma = 2*a2+b2*(1-2*width); a2*y <= b2*x; y++)
     {
-		setPixelVerif(display, cx + x, cy + y, coul);
-        setPixelVerif(display, cx - x, cy + y, coul);
-        setPixelVerif(display, cx + x, cy - y, coul);
-        setPixelVerif(display, cx - x, cy - y, coul);
+      setPixelVerif(display, cx + x, cy + y, coul);
+      setPixelVerif(display, cx - x, cy + y, coul);
+      setPixelVerif(display, cx + x, cy - y, coul);
+      setPixelVerif(display, cx - x, cy - y, coul);
 
-        if (sigma >= 0)
+      if (sigma >= 0)
         {
-            sigma += fb2 * (1 - x);
-            x--;
+	  sigma += fb2 * (1 - x);
+	  x--;
         }
-        sigma += a2 * ((4 * y) + 6);
+      sigma += a2 * ((4 * y) + 6);
     }
 }
 
@@ -102,39 +104,34 @@ int			print_ellipse(t_display *display, void *param)
       && (display->button == PRESSED))
     {
       last_state = PRESSED;
-	  if ((original_screen = SDL_CreateRGBSurface(0, WINX, WINY, 32, 0, 0, 0, 0)) == NULL)
+      if ((original_screen = SDL_CreateRGBSurface(0, WINX, WINY, 32, 0, 0, 0, 0)) == NULL)
 	return -1;
       if (SDL_BlitSurface(display->screen, NULL, original_screen, &pos_0) == -1)
 	return -1;
       if (set_start_pos(&start_pos, mouse->x, mouse->y) == -1)
 	return -1;
-
-
     }
-
 
   if (display->button == RELEASED)
     {
-	  // SAVE LAYER
+      // SAVE LAYER
       if (last_state == PRESSED)
-		if (add_layer(&display->layers, display->screen, &pos_0) == -1)
-	  		return -1;
+	if (add_layer(&display->layers, display->screen, &pos_0) == -1)
+	  return -1;
       last_state = RELEASED;
       original_screen = NULL;
       start_pos = NULL;
       return 0;
     }
 
-	  if (SDL_BlitSurface(original_screen, NULL, display->screen, &pos_0) == -1)
+  if (SDL_BlitSurface(original_screen, NULL, display->screen, &pos_0) == -1)
     return -1;
   // END APERCU
 
-
-      return display_ellipse(display,
-			    ((pos.x > start_pos->x) ? &pos : start_pos),
-			    start_pos->x,
-			    start_pos->y,
-			    get_w(start_pos, &pos),
-				100);
-
+  return display_ellipse(display,
+			 ((pos.x > start_pos->x) ? &pos : start_pos),
+			 start_pos->x,
+			 start_pos->y,
+			 get_w(start_pos, &pos),
+			 get_h(start_pos, &pos));
 }

@@ -3,7 +3,8 @@
 
 static const t_action	actions[] =
   {
-    {PRINT_PIXEL, &print_pixel},
+    {PRINT_PIXEL_CARRE, &print_pixel_carre},
+	{PRINT_PIXEL_ROND, &print_pixel_rond},
     {PRINT_LIGNE, &print_ligne},
     {PRINT_SQUARE, &print_square},
     {PRINT_RECT, &print_rect},

@@ -27,7 +27,7 @@ int main(int argc, char **argv)
   SDL_Rect	pos;
 
   display.layers = NULL;
-  display.action = PRINT_PIXEL;
+  display.action = PRINT_PIXEL_CARRE;
   display.button = RELEASED;
   SDL_Init(SDL_INIT_VIDEO);
 
@@ -256,7 +256,6 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	GtkWidget *submenu;
 	GtkWidget *pMenuItem;
 	GtkWidget *pMenuBar;
-	GSList *pList3;
 	GSList *pList2;
 	GSList *pListC;
 	char *color[] = {
@@ -331,12 +330,12 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	 	/*ETAPE 2*/
 	submenu = gtk_menu_new();
 		/*ETAPE 3*/
-	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Rond");
+	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Carre");
 	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);  
 	
-	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Carre");
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Rond");
 	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL); 
@@ -620,24 +619,26 @@ void Function(GtkWidget* widget, gpointer data)
 const char *fonction;
 fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
-	if(strcmp(fonction, "Pixel")==0)
+	if(strcmp(fonction, "Carre")==0)
 					display.action = 0;
-	else if(strcmp(fonction, "Line")==0)
+	else if(strcmp(fonction, "Rond")==0)
 					display.action = 1;
-	else if(strcmp(fonction, "Square")==0)
+	else if(strcmp(fonction, "Line")==0)
 					display.action = 2;
-	else if(strcmp(fonction, "Rectangle")==0)
+	else if(strcmp(fonction, "Square")==0)
 					display.action = 3;
-	else if(strcmp(fonction, "Circle")==0)
+	else if(strcmp(fonction, "Rectangle")==0)
 					display.action = 4;
-	else if(strcmp(fonction, "Disc")==0)
+	else if(strcmp(fonction, "Circle")==0)
 					display.action = 5;
-	else if(strcmp(fonction, "Ellipse")==0)
+	else if(strcmp(fonction, "Disc")==0)
 					display.action = 6;
-	else if(strcmp(fonction, "Gomme")==0)
+	else if(strcmp(fonction, "Ellipse")==0)
 					display.action = 7;
-	else if(strcmp(fonction, "FillPot")==0)
+	else if(strcmp(fonction, "Gomme")==0)
 					display.action = 8;
+	else if(strcmp(fonction, "FillPot")==0)
+					display.action = 9;
 
 }
 

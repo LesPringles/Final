@@ -253,9 +253,10 @@ GtkWidget* Create_toolbar()
 GtkWidget* CreateMenu(GtkWidget* pWindow)
 {
 	GtkWidget *pMenu;
+	GtkWidget *submenu;
 	GtkWidget *pMenuItem;
 	GtkWidget *pMenuBar;
-	//GSList *pList;
+	GSList *pList3;
 	GSList *pList2;
 	GSList *pListC;
 	char *color[] = {
@@ -321,10 +322,32 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 		/* ETAPE 2*/
 	pMenu = gtk_menu_new();
 		/* ETAPE 3*/   //Menu des fonction utilise pour draw ex: dessiner un carre ou un cercle
-	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Pixel");
+/*	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Pixel");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
-	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);  */
+
+	 /* SubMenu*/
+	 	/*ETAPE 2*/
+	submenu = gtk_menu_new();
+		/*ETAPE 3*/
+	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Rond");
+	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
+	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);  
+	
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Carre");
+	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
+	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL); 
+
+	/*ETAPE 4*/
+	pMenuItem = gtk_menu_item_new_with_label("Pixel");
+	/*ETAPE 5*/
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(pMenuItem), submenu);
+	/*ETAPE 6*/
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+
 
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Line");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);

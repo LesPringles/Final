@@ -3,7 +3,7 @@
 
 #include "../includes/interface.h"
 
-int 	rotate_surface(t_display *display);
+int		rotate_surface(t_display *display);
 
 static int	manage_mouse_event(SDL_Event *event, t_display *display)
 {
@@ -31,6 +31,7 @@ static void	change_color(t_display *display)
   display->color_index++;
   if (display->color_index > NB_COLORS)
     display->color_index = 0;
+  display->current_color = colors[display->color_index];
 }
 
 
@@ -99,11 +100,12 @@ static int	manage_event(SDL_Event *event, t_display *display)
   return manage_mouse_event(event, display);
 }
 
- int	sdl_loop(t_display *display)
+int	sdl_loop(t_display *display)
 {
   SDL_Event	event;
   int		ret;
 
+  display->current_color = colors[0];
   while (SDL_WaitEvent(&event))
     {
       if ((ret = manage_event(&event, display)) == -1)
@@ -113,4 +115,3 @@ static int	manage_event(SDL_Event *event, t_display *display)
     }
   return 0;
 }
-

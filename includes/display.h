@@ -14,7 +14,8 @@ typedef enum	e_current_action
     PRINT_RECT,
     PRINT_CIRCLE,
     PRINT_DISC,
-	PRINT_GOMME
+		PRINT_GOMME,
+		FILL_POT
   }		t_current_action;
 
 typedef enum	e_button_state

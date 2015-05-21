@@ -7,8 +7,6 @@ int 	rotate_surface(SDL_Surface *surf, double angle);
 
 
 
-
-
 static GtkWidget *pRadioLabel;
 static GtkWidget *pCheckLabel;
 static GtkWidget *pTearoffLabel;
@@ -200,6 +198,13 @@ GtkWidget* Create_toolbar()
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
+		GTK_STOCK_SELECT_COLOR,
+		"Pick Color",
+		NULL,
+		G_CALLBACK(quit),
+		NULL,
+		-1);
+	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_UNDO,
 		"Undo",
 		NULL,
@@ -345,6 +350,11 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Gomme");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
+	
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "FillPot");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
@@ -593,6 +603,8 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 5;
 	else if(strcmp(fonction, "Gomme")==0)
 					display.action = 6;
+	else if(strcmp(fonction, "FillPot")==0)
+					display.action = 7;
 
 }
 
@@ -699,6 +711,7 @@ void FilterLumMoins()
 		add_layer(&display.layers, display.screen, &pos_0);
 
 }
+
 
 
 

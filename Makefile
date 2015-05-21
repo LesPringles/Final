@@ -20,7 +20,8 @@ SRCS = ./sources/interface.c	\
 	  ./sources/new.c			\
 	  ./sources/rotation.c 		\
 	  ./sources/filtres.c		\
-	  ./sources/tracing.c
+	  ./sources/tracing.c   \
+		./sources/fill_pot.c
 
 OBJS = $(SRCS:.c=.o)
 

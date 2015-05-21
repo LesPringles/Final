@@ -3,7 +3,8 @@
 
 # include "display.h"
 
-int	print_pixel(t_display *display, void *param);
+int	print_pixel_carre(t_display *display, void *param);
+int	print_pixel_rond(t_display *display, void *param);
 int	print_ligne(t_display *display, void *param);
 int	print_square(t_display *display, void *param);
 int	print_rect(t_display *display, void *param);

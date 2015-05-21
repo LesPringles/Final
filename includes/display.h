@@ -8,7 +8,8 @@
 
 typedef enum	e_current_action
   {
-    PRINT_PIXEL = 0,
+    PRINT_PIXEL_CARRE = 0,
+	PRINT_PIXEL_ROND,
     PRINT_LIGNE,
     PRINT_SQUARE,
     PRINT_RECT,

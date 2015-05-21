@@ -9,8 +9,9 @@ static const t_action	actions[] =
     {PRINT_RECT, &print_rect},
     {PRINT_CIRCLE, &print_circle},
     {PRINT_DISC, &print_disc},
+	{PRINT_ELLIPSE, &print_ellipse},
   	{PRINT_GOMME, &print_gomme},
-		{FILL_POT, &fill_pot}
+	{FILL_POT, &fill_pot}
   };
 
 int		do_action(t_display *display, void *param)

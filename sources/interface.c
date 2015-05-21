@@ -3,6 +3,8 @@
 
 void change_color(GtkWidget* widget, gpointer data);
 int 	rotate_surface(SDL_Surface *surf, double angle);
+int 	zoom_surface(SDL_Surface *surf, double zoom);
+
 
 
 
@@ -222,14 +224,14 @@ GtkWidget* Create_toolbar()
 		GTK_STOCK_ZOOM_IN,
 		"Zoom In",
 		NULL,
-		NULL,
+		G_CALLBACK(ZoomIN),
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_ZOOM_OUT,
 		"Zoom Out",
 		NULL,
-		NULL,
+		G_CALLBACK(ZoomOUT),
 		NULL,
 		-1);
 
@@ -345,6 +347,11 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Disc");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
+
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Ellipse");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
@@ -518,6 +525,7 @@ void Open(GtkWidget *bouton, GtkWidget *file_selection)
 	chemin = gtk_file_selection_get_filename(GTK_FILE_SELECTION (file_selection) );
 	new(display.screen);
 	SDL_BlitSurface(SDL_LoadBMP(chemin), NULL, display.screen, NULL);
+	SDL_Flip(display.screen);
 	gtk_widget_destroy(file_selection);
 
 	add_layer(&display.layers, display.screen, &pos_0);
@@ -601,10 +609,12 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 4;
 	else if(strcmp(fonction, "Disc")==0)
 					display.action = 5;
-	else if(strcmp(fonction, "Gomme")==0)
+	else if(strcmp(fonction, "Ellipse")==0)
 					display.action = 6;
-	else if(strcmp(fonction, "FillPot")==0)
+	else if(strcmp(fonction, "Gomme")==0)
 					display.action = 7;
+	else if(strcmp(fonction, "FillPot")==0)
+					display.action = 8;
 
 }
 
@@ -744,6 +754,32 @@ void Rotate()
     pos_0.y = 0;
 
 	rotate_surface(display.screen, -90.0);
+
+	add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void ZoomIN()
+{
+	SDL_Rect		pos_0;
+
+    pos_0.x = 0;
+    pos_0.y = 0;
+
+	zoom_surface(display.screen, 1.1);
+
+	add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void ZoomOUT()
+{
+	SDL_Rect		pos_0;
+
+    pos_0.x = 0;
+    pos_0.y = 0;
+
+	zoom_surface(display.screen, 0.9);
 
 	add_layer(&display.layers, display.screen, &pos_0);
 

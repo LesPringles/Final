@@ -14,11 +14,13 @@ SRCS = ./sources/interface.c	\
 	  ./sources/print_rect.c	\
 	  ./sources/print_circle.c	\
 	  ./sources/print_disc.c	\
+	  ./sources/print_ellipse.c	\
 	  ./sources/gomme.c			\
 	  ./sources/do_action.c		\
 	  ./sources/save.c			\
 	  ./sources/new.c			\
 	  ./sources/rotation.c 		\
+	  ./sources/zoom.c 		\
 	  ./sources/filtres.c		\
 	  ./sources/tracing.c   \
 		./sources/fill_pot.c

@@ -37,6 +37,9 @@ void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
 void quit();
 void Rotate();
+void ZoomIN();
+void ZoomOUT();
+
 
 int	sdl_loop(t_display *display);
 

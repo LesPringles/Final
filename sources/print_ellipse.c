@@ -3,36 +3,43 @@
 #include "../includes/display.h"
 #include "../includes/couleurs.h"
 
-void cercle(t_display *display, int xc, int yc, long radius, Uint32 coul)
+void ellipse(t_display *display, int cx, int cy, int width, int height, Uint32 coul)
 {
+  
+  	int a2 = width * width;
+    int b2 = height * height;
+    int fa2 = 4 * a2, fb2 = 4 * b2;
+    int x, y, sigma;
 
-  int x = 0;
-    int y = radius;
-    int delta = 2 - 2 * radius;
-    int error = 0;
-
-
-    while(y >= 0)
+    /* first half */
+    for (x = 0, y = height, sigma = 2*b2+a2*(1-2*height); b2*x <= a2*y; x++)
     {
-        setPixelVerif (display, xc + x, yc + y, coul);
-        setPixelVerif (display, xc - x, yc + y, coul);
-        setPixelVerif (display, xc + x, yc - y, coul);
-        setPixelVerif (display, xc - x, yc - y, coul);
-        error = 2 * (delta + y) - 1;
-        if(delta < 0 && error <= 0) {
-            ++x;
-            delta += 2 * x + 1;
-            continue;
+        setPixelVerif(display, cx + x, cy + y, coul);
+        setPixelVerif(display, cx - x, cy + y, coul);
+        setPixelVerif(display, cx + x, cy - y, coul);
+        setPixelVerif(display, cx - x, cy - y, coul);
+        if (sigma >= 0)
+        {
+            sigma += fa2 * (1 - y);
+            y--;
         }
-        error = 2 * (delta - x) - 1;
-        if(delta > 0 && error > 0) {
-            --y;
-            delta += 1 - 2 * y;
-            continue;
+        sigma += b2 * ((4 * x) + 6);
+    }
+
+    /* second half */
+    for (x = width, y = 0, sigma = 2*a2+b2*(1-2*width); a2*y <= b2*x; y++)
+    {
+		setPixelVerif(display, cx + x, cy + y, coul);
+        setPixelVerif(display, cx - x, cy + y, coul);
+        setPixelVerif(display, cx + x, cy - y, coul);
+        setPixelVerif(display, cx - x, cy - y, coul);
+
+        if (sigma >= 0)
+        {
+            sigma += fb2 * (1 - x);
+            x--;
         }
-        ++x;
-        delta += 2 * (x - y);
-        --y;
+        sigma += a2 * ((4 * y) + 6);
     }
 }
 
@@ -45,14 +52,14 @@ static int		set_start_pos(SDL_Rect **p, Uint16 x, Uint16 y)
   return 0;
 }
 
-static int		display_circle(t_display *display, SDL_Rect *pos, int cx, int cy, long r)
+static int		display_ellipse(t_display *display, SDL_Rect *pos, int cx, int cy, int width, int height)
 {
   SDL_Surface		*square;
 
   if ((square = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
-  cercle(display, cx, cy, r, colors[display->color_index]);
+  ellipse(display, cx, cy, width, height, colors[display->color_index]);
 
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;
@@ -61,12 +68,18 @@ static int		display_circle(t_display *display, SDL_Rect *pos, int cx, int cy, lo
   return 0;
 }
 
-static long 			get_r(SDL_Rect *start, SDL_Rect *end)
+
+static int		get_w(SDL_Rect *start, SDL_Rect *end)
 {
-  return sqrtl((end->x - start->x) * (end->x - start->x) + (end->y - start->y) * (end->y - start->y));
+  return abs(end->x - start->x);
 }
 
-int			print_circle(t_display *display, void *param)
+static int		get_h(SDL_Rect *start, SDL_Rect *end)
+{
+  return abs(end->y - start->y);
+}
+
+int			print_ellipse(t_display *display, void *param)
 {
   static t_button_state	last_state = UNSET;
   static SDL_Rect	*start_pos = NULL;
@@ -117,10 +130,11 @@ int			print_circle(t_display *display, void *param)
   // END APERCU
 
 
-      return display_circle(display,
+      return display_ellipse(display,
 			    ((pos.x > start_pos->x) ? &pos : start_pos),
 			    start_pos->x,
 			    start_pos->y,
-			    get_r(start_pos, &pos));
+			    get_w(start_pos, &pos),
+				100);
 
 }

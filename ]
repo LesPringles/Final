@@ -4,9 +4,6 @@
 #include "../includes/couleurs.h"
 
 
-void disc(t_display *display, int cx, int cy, long rayon, Uint32 coul);
-
-
 int			print_pixel(t_display *display, void *param)
 {
   SDL_MouseButtonEvent	*mouse;
@@ -23,7 +20,7 @@ int			print_pixel(t_display *display, void *param)
   if ((pixel = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
-  disc(display, pos.x, pos.y, 5, colors[display->color_index]);
+  disc(display, cx, cy, 5, colors[display->color_index]);
 
   if (SDL_BlitSurface(pixel, NULL, display->screen, &pos) == -1)
     return -1;

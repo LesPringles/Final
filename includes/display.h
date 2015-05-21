@@ -61,7 +61,7 @@ int		add_layer(t_layers_list **list, SDL_Surface *layer, SDL_Rect *pos);
 int		do_action(t_display *display, void *param);
 void		setPixelVerif(t_display *display, int x, int y, Uint32 coul);
 void		setPixel(t_display *display, int x, int y, Uint32 coul);
-
+void		getColorFromPalette();
 
 int		save(SDL_Surface *surface, const char *filename);
 int		new(SDL_Surface *surface);

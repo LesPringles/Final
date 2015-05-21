@@ -203,7 +203,7 @@ GtkWidget* Create_toolbar()
 		GTK_STOCK_SELECT_COLOR,
 		"Pick Color",
 		NULL,
-		G_CALLBACK(quit),
+		G_CALLBACK(PickColor),
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
@@ -768,6 +768,11 @@ void quit()
 {
 	SDL_Quit();
 	gtk_main_quit();
+}
+
+void PickColor()
+{
+  getColorFromPalette();
 }
 
 void Rotate()

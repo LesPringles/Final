@@ -52,7 +52,7 @@ static int		display_circle(t_display *display, SDL_Rect *pos, int cx, int cy, lo
   if ((square = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
-  cercle(display, cx, cy, r, colors[display->color_index]);
+  cercle(display, cx, cy, r, display->current_color);
 
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;

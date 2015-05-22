@@ -12,7 +12,8 @@ static const t_action	actions[] =
     {PRINT_DISC, &print_disc},
     {PRINT_ELLIPSE, &print_ellipse},
     {PRINT_GOMME, &print_gomme},
-    {FILL_POT, &fill_pot}
+    {FILL_POT, &fill_pot},
+    {PICK_COLOR, &getColorFromSurface}
   };
 
 int		do_action(t_display *display, void *param)

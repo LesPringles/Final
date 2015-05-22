@@ -90,7 +90,7 @@ static int		display_ligne(t_display *display, SDL_Rect *pos, int x1, int y1, int
   if ((square = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
-  ligne(display, x1, y1, x2, y2, colors[display->color_index]);
+  ligne(display, x1, y1, x2, y2, display->current_color);
 
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;
@@ -107,7 +107,7 @@ int			print_ligne(t_display *display, void *param)
   SDL_MouseButtonEvent	*mouse;
   SDL_Rect		pos;
   SDL_Rect		pos_0;
-  
+
   pos_0.x = 0;
   pos_0.y = 0;
   mouse = (SDL_MouseButtonEvent *)param;

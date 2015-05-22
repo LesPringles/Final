@@ -23,7 +23,7 @@ int			print_pixel_carre(t_display *display, void *param)
   pos.y = mouse->y - 2;
   if ((pixel = SDL_CreateRGBSurface(0, 5, 5, 32, 0, 0, 0, 0)) == NULL)
     return -1;
-  if (SDL_FillRect(pixel, NULL, colors[display->color_index]) == -1)
+  if (SDL_FillRect(pixel, NULL, display->current_color) == -1)
     return -1;
   if (SDL_BlitSurface(pixel, NULL, display->screen, &pos) == -1)
     return -1;
@@ -62,7 +62,7 @@ int			print_pixel_rond(t_display *display, void *param)
       && (display->button == PRESSED))
     last_state = PRESSED;
 
-  disc(display, pos.x, pos.y, 3, colors[display->color_index]);
+  disc(display, pos.x, pos.y, 3, display->current_color);
 
   if (display->button == RELEASED)
     {

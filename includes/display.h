@@ -64,7 +64,7 @@ int		do_action(t_display *display, void *param);
 void		setPixelVerif(t_display *display, int x, int y, Uint32 coul);
 void		setPixel(t_display *display, int x, int y, Uint32 coul);
 int		getColorFromSurface(t_display *display, void *param);
-void		getColorFromPalette(t_display *display);
+void		getColorFromPalette(t_display *display, int flag);
 
 int		save(SDL_Surface *surface, const char *filename);
 int		new(SDL_Surface *surface);

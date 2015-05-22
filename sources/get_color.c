@@ -10,6 +10,8 @@ void		getColorFromPalette(t_display *display, int displayPalette)
 {
   SDL_Rect	pos;
 
+  if (display->action == PICK_COLOR)
+    return ;
   memset(&pos, 0, sizeof(SDL_Rect));
   display->old_action = display->action;
   display->action = PICK_COLOR;

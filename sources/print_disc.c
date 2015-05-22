@@ -72,7 +72,7 @@ static int		display_disc(t_display *display, SDL_Rect *pos, int cx, int cy, long
   if ((square = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
-  disc(display, cx, cy, r, colors[display->color_index]);
+  disc(display, cx, cy, r, display->current_color);
 
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;

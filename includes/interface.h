@@ -1,6 +1,6 @@
 //
 //  interface.h
-//  
+//
 
 #ifndef apero_interface_h
 #define apero_interface_h
@@ -33,12 +33,14 @@ void Function(GtkWidget* widget, gpointer data);
 void Undo();
 void Redo();
 void Clear();
+void PickColor();
 void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
 void quit();
 void Rotate();
 void ZoomIN();
 void ZoomOUT();
+void Lumi();
 
 
 int	sdl_loop(t_display *display);

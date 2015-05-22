@@ -5,8 +5,8 @@ SDL += -lSDL -lSDL_mixer -lSDL_gfx -lm
 
 EXEC=apero
 
-SRCS = ./sources/interface.c	\
-		./sources/layers.c		\
+SRCS =	  ./sources/interface.c	\
+	  ./sources/layers.c		\
 	  ./sources/sdl_init.c		\
 	  ./sources/print_pixel.c	\
 	  ./sources/print_ligne.c	\
@@ -24,7 +24,8 @@ SRCS = ./sources/interface.c	\
 	  ./sources/filtres.c		\
 	  ./sources/convolution.c	\
 	  ./sources/tracing.c   	\
-	  ./sources/fill_pot.c
+	  ./sources/fill_pot.c		\
+	./sources/get_color.c		\
 
 OBJS = $(SRCS:.c=.o)
 

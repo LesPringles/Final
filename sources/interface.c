@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 {
 	GtkWidget *pWindow;
 	GtkWidget *pMenuBar;
+//	GtkWidget *pImage;
 	GtkWidget *pToolBar;
 	GtkWidget *pVBox;
 
@@ -31,7 +32,7 @@ int main(int argc, char **argv)
   display.button = RELEASED;
   SDL_Init(SDL_INIT_VIDEO);
 
-  display.screen = SDL_SetVideoMode(WINX, WINY, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_NOFRAME);
+  display.screen = SDL_SetVideoMode(WINX, WINY, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
  	new(display.screen);
 	SDL_WM_SetCaption("Apero", NULL);
@@ -63,6 +64,10 @@ int main(int argc, char **argv)
 	gtk_box_pack_start(GTK_BOX(pVBox), pMenuBar, FALSE, FALSE, 0);
 	  /* Ajout du toolbar a la fenetre */
 	gtk_box_pack_start(GTK_BOX(pVBox), pToolBar, FALSE, FALSE, 0);
+		/* Ajout d'un GTK_WIDGET*/
+/*	pImage = gtk_image_new_from_file("./ressources/lena_couleur.bmp");
+	gtk_box_pack_start(GTK_BOX(pVBox), pImage, FALSE, FALSE, 0);*/
+
 
 	gtk_widget_show_all(pWindow);
 
@@ -203,7 +208,14 @@ GtkWidget* Create_toolbar()
 		GTK_STOCK_SELECT_COLOR,
 		"Pick Color",
 		NULL,
-		G_CALLBACK(quit),
+		G_CALLBACK(PickColor),
+		NULL,
+		-1);
+	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
+		GTK_STOCK_DIALOG_INFO	,
+		"Luminosité",
+		NULL,
+		G_CALLBACK(Lumi),
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
@@ -330,12 +342,12 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	 	/*ETAPE 2*/
 	submenu = gtk_menu_new();
 		/*ETAPE 3*/
-	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Carre");
+	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Rond");
 	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
-	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Rond");
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Carre");
 	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
@@ -492,7 +504,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	/** Cinquieme sous-menu **/
 	  /* ETAPE 2 */
 	pMenu = gtk_menu_new();
-	  /* ETAPE 3 */
+ /* ETAPE 3 */
 	pMenuItem = gtk_menu_item_new_with_label("A propos de...");
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(OnAbout), (GtkWidget*) pWindow);
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
@@ -612,31 +624,32 @@ void *run(void *arg){
 
 void change_color(GtkWidget* widget, gpointer data)
 {
-(void)data;
-const char *color;
-color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
+  (void)data;
+  const char *color;
+  color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
 
-	if(strcmp(color, "RED") == 0)
-		display.color_index = 6;
-	else if(strcmp(color, "BLUE") == 0)
-		display.color_index = 1;
-	else if(strcmp(color, "GREEN") == 0)
-		display.color_index = 2;
-	else if(strcmp(color, "YELLOW") == 0)
-		display.color_index = 3;
-	else if(strcmp(color, "PINK") == 0)
-		display.color_index = 4;
-	else if(strcmp(color, "PURPLE")==0)
-		display.color_index = 5;
-	else if(strcmp(color, "BLACK") == 0)
-		display.color_index = 0;
-	else if(strcmp(color, "WHITE") == 0)
-		display.color_index = 7;
-	else if(strcmp(color, "GREY") == 0)
-		display.color_index = 8;
-	else if(strcmp(color, "SILVER") == 0)
-		display.color_index = 9;
+  if(strcmp(color, "RED") == 0)
+    display.color_index = 6;
+  else if(strcmp(color, "BLUE") == 0)
+    display.color_index = 1;
+  else if(strcmp(color, "GREEN") == 0)
+    display.color_index = 2;
+  else if(strcmp(color, "YELLOW") == 0)
+    display.color_index = 3;
+  else if(strcmp(color, "PINK") == 0)
+    display.color_index = 4;
+  else if(strcmp(color, "PURPLE")==0)
+    display.color_index = 5;
+  else if(strcmp(color, "BLACK") == 0)
+    display.color_index = 0;
+  else if(strcmp(color, "WHITE") == 0)
+    display.color_index = 7;
+  else if(strcmp(color, "GREY") == 0)
+    display.color_index = 8;
+  else if(strcmp(color, "SILVER") == 0)
+    display.color_index = 9;
+  display.current_color = colors[display.color_index];
 }
 
 void Function(GtkWidget* widget, gpointer data)
@@ -646,7 +659,7 @@ const char *fonction;
 fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
 	if(strcmp(fonction, "Carre")==0)
-					display.action = 0;
+					display.action = 0;	
 	else if(strcmp(fonction, "Rond")==0)
 					display.action = 1;
 	else if(strcmp(fonction, "Line")==0)
@@ -853,7 +866,34 @@ void FlouGaussien()
 
 
 
+void Lumi()
+{
+	 GtkWidget* pWindow;
+   GtkWidget *pMainVBox;
+   GtkWidget *pFrame;
+   GtkWidget *pScale;
 
+   pWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   gtk_window_set_title(GTK_WINDOW(pWindow), "GtkScale");
+   gtk_window_set_default_size(GTK_WINDOW(pWindow), 320, 50);
+   gtk_container_set_border_width(GTK_CONTAINER(pWindow), 4);
+
+   pMainVBox = gtk_vbox_new(TRUE, 0);
+   gtk_container_add(GTK_CONTAINER(pWindow), pMainVBox);
+
+   pFrame = gtk_frame_new("Luminosité");
+   /* Création du widget GtkHScale */
+   pScale = gtk_hscale_new_with_range(0, 100, 1);
+   gtk_container_add(GTK_CONTAINER(pFrame), pScale);
+   gtk_box_pack_start(GTK_BOX(pMainVBox), pFrame, FALSE, FALSE, 0);
+
+ 	gtk_widget_show_all(pWindow);
+
+   g_signal_connect(G_OBJECT(pWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+   gtk_main();
+
+}
 
 void Redo()
 {
@@ -874,6 +914,11 @@ void quit()
 {
 	SDL_Quit();
 	gtk_main_quit();
+}
+
+void PickColor()
+{
+  getColorFromPalette(&display, 1);
 }
 
 void Rotate()

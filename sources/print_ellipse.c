@@ -61,7 +61,7 @@ static int		display_ellipse(t_display *display, SDL_Rect *pos, int cx, int cy, i
   if ((square = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
-  ellipse(display, cx, cy, width, height, colors[display->color_index]);
+  ellipse(display, cx, cy, width, height, display->current_color);
 
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;

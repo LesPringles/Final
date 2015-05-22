@@ -16,7 +16,7 @@ static int		display_square(t_display *display, SDL_Rect *pos, int w, int h)
 
   if ((square = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0)) == NULL)
     return -1;
-  if (SDL_FillRect(square, NULL, colors[display->color_index]) == -1)
+  if (SDL_FillRect(square, NULL, display->current_color) == -1)
     return -1;
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;
@@ -45,7 +45,7 @@ int			print_square(t_display *display, void *param)
   pos.y = mouse->y;
   if (last_state == UNSET && display->button == RELEASED)
     return (0);
-  //BEGIN APERCU	
+  //BEGIN APERCU
   if ((start_pos == NULL)
       && ((last_state == UNSET) || (last_state == RELEASED))
       && (display->button == PRESSED))
@@ -98,7 +98,7 @@ int			print_square(t_display *display, void *param)
 		}
 		else // Haut Gauche
 			origin.x = start_pos->x - get_w(start_pos, &pos);
-			origin.y = start_pos->y - get_w(start_pos, &pos);			
+			origin.y = start_pos->y - get_w(start_pos, &pos);
 			return display_square(display, &origin, get_w(start_pos, &pos), get_w(start_pos, &pos));
   }
 

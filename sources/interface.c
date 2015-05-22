@@ -772,7 +772,7 @@ void quit()
 
 void PickColor()
 {
-  getColorFromPalette();
+  getColorFromPalette(&display);
 }
 
 void Rotate()

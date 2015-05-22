@@ -17,7 +17,8 @@ typedef enum	e_current_action
     PRINT_DISC,
     PRINT_ELLIPSE,
     PRINT_GOMME,
-    FILL_POT
+    FILL_POT,
+    PICK_COLOR
   }		t_current_action;
 
 typedef enum	e_button_state
@@ -39,6 +40,7 @@ typedef struct		s_display
 {
   SDL_Surface		*screen;
   t_layers_list		*layers;
+  t_current_action	old_action;
   t_current_action	action;
   t_button_state	button;
   int			color_index;
@@ -61,7 +63,8 @@ int		add_layer(t_layers_list **list, SDL_Surface *layer, SDL_Rect *pos);
 int		do_action(t_display *display, void *param);
 void		setPixelVerif(t_display *display, int x, int y, Uint32 coul);
 void		setPixel(t_display *display, int x, int y, Uint32 coul);
-void		getColorFromPalette();
+int		getColorFromSurface(t_display *display, void *param);
+void		getColorFromPalette(t_display *display);
 
 int		save(SDL_Surface *surface, const char *filename);
 int		new(SDL_Surface *surface);

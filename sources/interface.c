@@ -208,7 +208,7 @@ GtkWidget* Create_toolbar()
 		GTK_STOCK_SELECT_COLOR,
 		"Pick Color",
 		NULL,
-		G_CALLBACK(PickColor),
+		G_CALLBACK(quit),
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
@@ -598,32 +598,31 @@ void *run(void *arg){
 
 void change_color(GtkWidget* widget, gpointer data)
 {
-  (void)data;
-  const char *color;
-  color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
+(void)data;
+const char *color;
+color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
 
-  if(strcmp(color, "RED") == 0)
-    display.color_index = 6;
-  else if(strcmp(color, "BLUE") == 0)
-    display.color_index = 1;
-  else if(strcmp(color, "GREEN") == 0)
-    display.color_index = 2;
-  else if(strcmp(color, "YELLOW") == 0)
-    display.color_index = 3;
-  else if(strcmp(color, "PINK") == 0)
-    display.color_index = 4;
-  else if(strcmp(color, "PURPLE")==0)
-    display.color_index = 5;
-  else if(strcmp(color, "BLACK") == 0)
-    display.color_index = 0;
-  else if(strcmp(color, "WHITE") == 0)
-    display.color_index = 7;
-  else if(strcmp(color, "GREY") == 0)
-    display.color_index = 8;
-  else if(strcmp(color, "SILVER") == 0)
-    display.color_index = 9;
-  display.current_color = colors[display.color_index];
+	if(strcmp(color, "RED") == 0)
+		display.color_index = 6;
+	else if(strcmp(color, "BLUE") == 0)
+		display.color_index = 1;
+	else if(strcmp(color, "GREEN") == 0)
+		display.color_index = 2;
+	else if(strcmp(color, "YELLOW") == 0)
+		display.color_index = 3;
+	else if(strcmp(color, "PINK") == 0)
+		display.color_index = 4;
+	else if(strcmp(color, "PURPLE")==0)
+		display.color_index = 5;
+	else if(strcmp(color, "BLACK") == 0)
+		display.color_index = 0;
+	else if(strcmp(color, "WHITE") == 0)
+		display.color_index = 7;
+	else if(strcmp(color, "GREY") == 0)
+		display.color_index = 8;
+	else if(strcmp(color, "SILVER") == 0)
+		display.color_index = 9;
 }
 
 void Function(GtkWidget* widget, gpointer data)
@@ -632,24 +631,26 @@ void Function(GtkWidget* widget, gpointer data)
 const char *fonction;
 fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
-	if(strcmp(fonction, "Pixel")==0)
-					display.action = 0;
-	else if(strcmp(fonction, "Line")==0)
+	if(strcmp(fonction, "Carre")==0)
+					display.action = 0;	
+	else if(strcmp(fonction, "Rond")==0)
 					display.action = 1;
-	else if(strcmp(fonction, "Square")==0)
+	else if(strcmp(fonction, "Line")==0)
 					display.action = 2;
-	else if(strcmp(fonction, "Rectangle")==0)
+	else if(strcmp(fonction, "Square")==0)
 					display.action = 3;
-	else if(strcmp(fonction, "Circle")==0)
+	else if(strcmp(fonction, "Rectangle")==0)
 					display.action = 4;
-	else if(strcmp(fonction, "Disc")==0)
+	else if(strcmp(fonction, "Circle")==0)
 					display.action = 5;
-	else if(strcmp(fonction, "Ellipse")==0)
+	else if(strcmp(fonction, "Disc")==0)
 					display.action = 6;
-	else if(strcmp(fonction, "Gomme")==0)
+	else if(strcmp(fonction, "Ellipse")==0)
 					display.action = 7;
-	else if(strcmp(fonction, "FillPot")==0)
+	else if(strcmp(fonction, "Gomme")==0)
 					display.action = 8;
+	else if(strcmp(fonction, "FillPot")==0)
+					display.action = 9;
 
 }
 
@@ -806,11 +807,6 @@ void quit()
 {
 	SDL_Quit();
 	gtk_main_quit();
-}
-
-void PickColor()
-{
-  getColorFromPalette(&display);
 }
 
 void Rotate()

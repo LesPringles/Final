@@ -39,6 +39,7 @@ void quit();
 void Rotate();
 void ZoomIN();
 void ZoomOUT();
+void Lumi();
 
 
 int	sdl_loop(t_display *display);

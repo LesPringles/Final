@@ -59,6 +59,18 @@ void FilterLumPlus();
 SDL_Surface* filtre_lum_plus(t_display display);
 void FilterLumMoins();
 SDL_Surface* filtre_lum_moins(t_display display);
+void Detec();
+SDL_Surface* SDL_DetectionsBords(t_display display);
+void Repoussage();
+SDL_Surface* SDL_Repoussage(t_display display);
+void Flou();
+SDL_Surface* SDL_Flou(t_display display);
+void Gaufrage();
+SDL_Surface* SDL_Gaufrage(t_display display);
+void AugContraste();
+SDL_Surface* SDL_AugmenterContraste(t_display display);
+void FlouGaussien();
+SDL_Surface* SDL_FlouGaussien(t_display display, float sigma, unsigned int taille_noyau);
 
 
 

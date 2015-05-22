@@ -454,6 +454,32 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterLumMoins), NULL);
 
+	pMenuItem = gtk_menu_item_new_with_label( "Detec");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Detec), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Repoussage");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Repoussage), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Flou");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Flou), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Gaufrage");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Gaufrage), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Augmenter Contraste");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(AugContraste), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Flou Gaussien");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FlouGaussien), NULL);
+
+
+
 
 
 		/* ETAPE 4*/
@@ -745,6 +771,86 @@ void FilterLumMoins()
 		add_layer(&display.layers, display.screen, &pos_0);
 
 }
+
+void Detec()
+{
+		SDL_DetectionsBords(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void Repoussage()
+{
+		SDL_Repoussage(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void Flou()
+{
+		SDL_Flou(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void Gaufrage()
+{
+		SDL_Gaufrage(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void AugContraste()
+{
+		SDL_AugmenterContraste(display);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+void FlouGaussien()
+{
+		SDL_FlouGaussien(display, 0.05, 15);
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
+		add_layer(&display.layers, display.screen, &pos_0);
+
+}
+
+
 
 
 

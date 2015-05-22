@@ -8,7 +8,6 @@
 
 void		getColorFromPalette(t_display *display, int displayPalette)
 {
-  SDL_Surface	*palette;
   SDL_Rect	pos;
 
   memset(&pos, 0, sizeof(SDL_Rect));
@@ -17,13 +16,12 @@ void		getColorFromPalette(t_display *display, int displayPalette)
   if (displayPalette)
     {
       add_layer(&display->layers, display->screen, &pos);
-      ; // TODO: load bmp
-      if (SDL_BlitSurface(palette,
+      if (SDL_BlitSurface(SDL_LoadBMP("./ressources/palette.bmp"),
 			  NULL,
 			  display->screen,
 			  &pos) == -1)
-	return (-1);
-      return SDL_Flip(display->screen);
+	return ;
+      SDL_Flip(display->screen);
     }
 }
 

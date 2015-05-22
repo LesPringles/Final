@@ -586,31 +586,32 @@ void *run(void *arg){
 
 void change_color(GtkWidget* widget, gpointer data)
 {
-(void)data;
-const char *color;
-color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
+  (void)data;
+  const char *color;
+  color = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
 
-	if(strcmp(color, "RED") == 0)
-		display.color_index = 6;
-	else if(strcmp(color, "BLUE") == 0)
-		display.color_index = 1;
-	else if(strcmp(color, "GREEN") == 0)
-		display.color_index = 2;
-	else if(strcmp(color, "YELLOW") == 0)
-		display.color_index = 3;
-	else if(strcmp(color, "PINK") == 0)
-		display.color_index = 4;
-	else if(strcmp(color, "PURPLE")==0)
-		display.color_index = 5;
-	else if(strcmp(color, "BLACK") == 0)
-		display.color_index = 0;
-	else if(strcmp(color, "WHITE") == 0)
-		display.color_index = 7;
-	else if(strcmp(color, "GREY") == 0)
-		display.color_index = 8;
-	else if(strcmp(color, "SILVER") == 0)
-		display.color_index = 9;
+  if(strcmp(color, "RED") == 0)
+    display.color_index = 6;
+  else if(strcmp(color, "BLUE") == 0)
+    display.color_index = 1;
+  else if(strcmp(color, "GREEN") == 0)
+    display.color_index = 2;
+  else if(strcmp(color, "YELLOW") == 0)
+    display.color_index = 3;
+  else if(strcmp(color, "PINK") == 0)
+    display.color_index = 4;
+  else if(strcmp(color, "PURPLE")==0)
+    display.color_index = 5;
+  else if(strcmp(color, "BLACK") == 0)
+    display.color_index = 0;
+  else if(strcmp(color, "WHITE") == 0)
+    display.color_index = 7;
+  else if(strcmp(color, "GREY") == 0)
+    display.color_index = 8;
+  else if(strcmp(color, "SILVER") == 0)
+    display.color_index = 9;
+  display.current_color = colors[display.color_index];
 }
 
 void Function(GtkWidget* widget, gpointer data)

@@ -16,7 +16,7 @@ static int		display_rect(t_display *display, SDL_Rect *pos, int w, int h)
 
   if ((square = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0)) == NULL)
     return -1;
-  if (SDL_FillRect(square, NULL, colors[display->color_index]) == -1)
+  if (SDL_FillRect(square, NULL, display->current_color) == -1)
     return -1;
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;

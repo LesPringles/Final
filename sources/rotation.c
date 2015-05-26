@@ -13,9 +13,21 @@ void rotate_surface(SDL_Surface *picture, double angle)
 	//correction rotation noir???
 }
 
+<<<<<<< HEAD
 SDL_Surface *retournementHorizontal(SDL_Surface *surface) {
 	int y, i;
 	Uint8 *pixel1, *pixel2;
+=======
+void rotation_horizontale(t_display *display)
+{
+	
+
+}
+
+void rotation_verticale(t_display *display)
+{
+}
+>>>>>>> 94eaeb59236145257757a24d6c125a7aa8d2a8c1
 
 	SDL_LockSurface(surface);
 

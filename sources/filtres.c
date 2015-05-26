@@ -361,6 +361,115 @@ SDL_Surface* filtre_lum_moins(t_display display)
 		return display.screen;
 }
 
+SDL_Surface* filtre_bright_m(t_display display, int coef)
+{
+	int x, y, n;
+ 
+    Uint8 r_s, g_s, b_s, a_s;
+ 
+    Uint32 pixel_s;
+ 
+    SDL_LockSurface(display.screen);
+
+	n = (50 - coef) * 2.55;
+	for (y = 0 ; y < display.screen->h; y ++)
+        {
+                for ( x = 0 ; x < display.screen->w; x ++)
+                {
+					
+					pixel_s = *((Uint32*)(display.screen->pixels) + x + y * WINX);
+ 
+                    SDL_GetRGBA(pixel_s, display.screen->format, &r_s, &g_s, &b_s, &a_s);
+
+
+					if (r_s < n)
+						r_s = 0;
+					else
+						r_s = r_s - n;
+
+					if (g_s < n)
+						g_s = 0;
+					else
+						g_s = g_s - n;
+
+					if (b_s < n)
+						b_s = 0;
+					else
+						b_s = b_s - n;
+
+                   
+                    pixel_s = SDL_MapRGBA(display.screen->format, r_s, g_s, b_s, a_s);
+					setPixel(&display, x, y, pixel_s);
+
+				}
+
+		}
+
+
+  	SDL_UnlockSurface(display.screen);
+
+		SDL_BlitSurface(display.screen, NULL, display.screen, NULL);
+
+		SDL_Flip(display.screen);
+
+		return display.screen;
+}
+
+SDL_Surface* filtre_bright_p(t_display display, int coef)
+{
+	int x, y, n;
+ 
+    Uint8 r_s, g_s, b_s, a_s;
+ 
+    Uint32 pixel_s;
+ 
+    SDL_LockSurface(display.screen);
+
+	n = (coef - 50) * 2.55;
+	for (y = 0 ; y < display.screen->h; y ++)
+        {
+                for ( x = 0 ; x < display.screen->w; x ++)
+                {
+					
+					pixel_s = *((Uint32*)(display.screen->pixels) + x + y * WINX);
+ 
+                    SDL_GetRGBA(pixel_s, display.screen->format, &r_s, &g_s, &b_s, &a_s);
+
+
+					if (r_s > 255 - n)
+						r_s = 255;
+					else
+						r_s = r_s + n;
+
+					if (g_s > 255 - n)
+						g_s = 255;
+					else
+						g_s = g_s + n;
+
+					if (b_s > 255 - n)
+						b_s = 255;
+					else
+						b_s = b_s + n;
+
+                   
+                    pixel_s = SDL_MapRGBA(display.screen->format, r_s, g_s, b_s, a_s);
+					setPixel(&display, x, y, pixel_s);
+
+				}
+
+		}
+
+
+  	SDL_UnlockSurface(display.screen);
+
+		SDL_BlitSurface(display.screen, NULL, display.screen, NULL);
+
+		SDL_Flip(display.screen);
+
+		return display.screen;
+}
+
+
 /*SDL_Surface* filtre_moy(t_display display)
 {
 	int x, y;

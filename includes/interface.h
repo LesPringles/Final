@@ -1,5 +1,5 @@
 //
-//  interface.h
+// 		interface.h
 //
 
 #ifndef apero_interface_h
@@ -11,7 +11,6 @@
 #include <string.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_rotozoom.h>
-
 
 #include "display.h"
 #include "shapes.h"
@@ -33,6 +32,7 @@ void Function(GtkWidget* widget, gpointer data);
 void Undo();
 void Redo();
 void Clear();
+void Palette();
 void PickColor();
 void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
@@ -41,9 +41,10 @@ void Rotate();
 void ZoomIN();
 void ZoomOUT();
 void Lumi();
+void OnScrollbarChange();
 
+int 		sdl_loop(t_display *display);
 
-int	sdl_loop(t_display *display);
 
 void FilterBW();
 SDL_Surface* filtre_noir_blanc(t_display display);
@@ -74,7 +75,9 @@ SDL_Surface* SDL_AugmenterContraste(t_display display);
 void FlouGaussien();
 SDL_Surface* SDL_FlouGaussien(t_display display, float sigma, unsigned int taille_noyau);
 
+SDL_Surface* filtre_bright_m(t_display display, int coef);
+SDL_Surface* filtre_bright_p(t_display display, int coef);
 
 
 
-#endif
+	#endif

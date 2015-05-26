@@ -14,6 +14,8 @@ static GtkWidget *pCheckLabel;
 static GtkWidget *pTearoffLabel;
 
 t_display display;
+int value = 50;
+char jojo[] = "50";
 
 int main(int argc, char **argv)
 {
@@ -191,13 +193,6 @@ GtkWidget* Create_toolbar()
 
 	/* Creation a partir de stock */
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
-		GTK_STOCK_REFRESH,
-		"Rotate",
-		NULL,
-		G_CALLBACK(Rotate),
-		NULL,
-		-1);
-	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_CLEAR,
 		"Clear",
 		NULL,
@@ -206,13 +201,20 @@ GtkWidget* Create_toolbar()
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_SELECT_COLOR,
+		"Palette",
+		NULL,
+		G_CALLBACK(Palette),
+		NULL,
+		-1);
+gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
+		GTK_STOCK_INDEX,
 		"Pick Color",
 		NULL,
 		G_CALLBACK(PickColor),
 		NULL,
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
-		GTK_STOCK_DIALOG_INFO	,
+		GTK_STOCK_DIALOG_INFO,
 		"Luminosité",
 		NULL,
 		G_CALLBACK(Lumi),
@@ -332,11 +334,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	/*  Deuxieme sous-menu*/
 		/* ETAPE 2*/
 	pMenu = gtk_menu_new();
-		/* ETAPE 3*/   //Menu des fonction utilise pour draw ex: dessiner un carre ou un cercle
-/*	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Pixel");
-	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
-	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
-	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);  */
+		/* ETAPE 3*/   
 
 	 /* SubMenu*/
 	 	/*ETAPE 2*/
@@ -430,7 +428,55 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 		/* ETAPE 6*/
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
 
+
 	/** Quatrieme sous-menu**/
+		/* ETAPE 2*/
+	pMenu = gtk_menu_new();
+
+		/* ETAPE 3*/
+	pMenuItem = gtk_menu_item_new_with_label( "+90");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Rotate), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label("180");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Rotate), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "-90");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Rotate), NULL);
+
+
+				 /* SubMenu*/
+			 	/*ETAPE 2*/
+			submenu = gtk_menu_new();
+				/*ETAPE 3*/
+			pMenuItem = gtk_menu_item_new_with_label("Horizontal");
+			gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
+			g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Rotate), NULL);
+
+			pMenuItem = gtk_menu_item_new_with_label("Vertical");
+			gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
+			g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Rotate), NULL);
+
+			/*ETAPE 4*/
+			pMenuItem = gtk_menu_item_new_with_label("Symmetry");
+			/*ETAPE 5*/
+			gtk_menu_item_set_submenu(GTK_MENU_ITEM(pMenuItem), submenu);
+			/*ETAPE 6*/
+			gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+
+
+
+		/* ETAPE 4*/
+	pMenuItem = gtk_menu_item_new_with_label("Rotate");
+		/* ETAPE 5*/
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(pMenuItem), pMenu);
+		/* ETAPE 6*/
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
+
+
+	/** Cinquieme sous-menu**/
 		/* ETAPE 2*/
 	pMenu = gtk_menu_new();
 		/* ETAPE 3*/
@@ -492,8 +538,6 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 
 
 
-
-
 		/* ETAPE 4*/
 	pMenuItem = gtk_menu_item_new_with_label("Filter");
 		/* ETAPE 5*/
@@ -501,7 +545,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 		/* ETAPE 6*/
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
 
-	/** Cinquieme sous-menu **/
+	/** Sixieme sous-menu **/
 	  /* ETAPE 2 */
 	pMenu = gtk_menu_new();
  /* ETAPE 3 */
@@ -871,28 +915,76 @@ void Lumi()
 	 GtkWidget* pWindow;
    GtkWidget *pMainVBox;
    GtkWidget *pFrame;
-   GtkWidget *pScale;
+   GtkWidget *pColorBox;
+   GtkWidget *pLabel;
+   GtkWidget *pScrollbar;
+   GtkObject *Adjust;
+
+		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;
+
 
    pWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_window_set_title(GTK_WINDOW(pWindow), "GtkScale");
+   gtk_window_set_title(GTK_WINDOW(pWindow), "Ricard!");
    gtk_window_set_default_size(GTK_WINDOW(pWindow), 320, 50);
    gtk_container_set_border_width(GTK_CONTAINER(pWindow), 4);
-
+ 
    pMainVBox = gtk_vbox_new(TRUE, 0);
    gtk_container_add(GTK_CONTAINER(pWindow), pMainVBox);
-
-   pFrame = gtk_frame_new("Luminosité");
-   /* Création du widget GtkHScale */
-   pScale = gtk_hscale_new_with_range(0, 100, 1);
-   gtk_container_add(GTK_CONTAINER(pFrame), pScale);
+ 
+   pFrame = gtk_frame_new("Brightness");
    gtk_box_pack_start(GTK_BOX(pMainVBox), pFrame, FALSE, FALSE, 0);
-
- 	gtk_widget_show_all(pWindow);
-
+   pColorBox = gtk_vbox_new(TRUE, 0);
+   gtk_container_add(GTK_CONTAINER(pFrame), pColorBox);
+	 
+   /* Label d'affichage de valeur R*/
+   pLabel = gtk_label_new(jojo);
+   gtk_box_pack_start(GTK_BOX(pColorBox), pLabel, FALSE, FALSE, 0);
+   /* Création d un GtkAdjustment */
+   Adjust = gtk_adjustment_new(value, 0, 100, 1, 10, 1);
+   /* Creation d une scrollbar horizontale*/
+   pScrollbar = gtk_hscrollbar_new(GTK_ADJUSTMENT(Adjust));
+   gtk_box_pack_start(GTK_BOX(pColorBox), pScrollbar, TRUE, TRUE, 0);
+   /* Connexion du signal pour modification de l'affichage */
+   g_signal_connect(G_OBJECT(pScrollbar), "value-changed",
+   		G_CALLBACK(OnScrollbarChange), (GtkWidget*)pLabel);
+ 
+   gtk_widget_show_all(pWindow);
+ 
    g_signal_connect(G_OBJECT(pWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
+ 
    gtk_main();
 
+	if(value > 50)
+	{
+	filtre_bright_p(display, value);
+	add_layer(&display.layers, display.screen, &pos_0);
+	}
+	else if(value < 50)
+	{
+	filtre_bright_m(display, value);
+	add_layer(&display.layers, display.screen, &pos_0);
+	}
+
+}
+
+void OnScrollbarChange(GtkWidget *pWidget, gpointer data)
+{
+   gchar* sLabel;
+   gint iValue;
+ 
+   /* Récupération de la valeur de la scrollbar */
+   iValue = gtk_range_get_value(GTK_RANGE(pWidget));
+	 value = gtk_range_get_value(GTK_RANGE(pWidget));
+	 sprintf(jojo, "%d", value);
+   /* Création du nouveau label */
+   sLabel = g_strdup_printf("%d", iValue);
+   /* Modification du label */
+   gtk_label_set_text(GTK_LABEL(data), sLabel);
+   /* Liberation memoire */
+   g_free(sLabel);
 }
 
 void Redo()
@@ -908,6 +1000,8 @@ void Undo()
 void Clear()
 {
 		new(display.screen);
+		value = 50;
+		
 }
 
 void quit()
@@ -916,12 +1010,12 @@ void quit()
 	gtk_main_quit();
 }
 
-void PickColor()
+void Palette()
 {
-  getColorFromPalette(&display, 1);
+ getColorFromPalette(&display, 1);
 }
 
-void Rotate()
+void PickColor()
 {
 	SDL_Rect		pos_0;
 
@@ -932,7 +1026,32 @@ void Rotate()
 
 
 	add_layer(&display.layers, display.screen, &pos_0);
+  getColorFromPalette(&display, 0);
+}
 
+void Rotate(GtkWidget* widget, gpointer data)
+{
+	(void)data;
+	const char *fonction;
+	fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
+
+	if(strcmp(fonction, "+90")==0)
+			{rotate_surface(display.screen, -90.0);}
+	else if(strcmp(fonction, "180")==0)
+			{/*
+			rotate_surface(display.screen, -90.0);
+			rotate_surface(display.screen, -90.0);*/
+			rotate_surface(display.screen, 180.0);
+			}
+	else if(strcmp(fonction, "-90")==0)
+			{/*
+			rotate_surface(display.screen, -90.0);
+			rotate_surface(display.screen, -90.0);
+			rotate_surface(display.screen, -90.0);*/
+			rotate_surface(display.screen, 90.0);
+			}
+	
+			
 }
 
 void ZoomIN()

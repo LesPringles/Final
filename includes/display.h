@@ -3,8 +3,8 @@
 
 # include <SDL/SDL.h>
 
-# define WINX	1280
-# define WINY	720
+# define WINX	1000
+# define WINY	1000
 
 typedef enum	e_current_action
   {

@@ -14,6 +14,13 @@ double 	paramCx, paramCy;
 int 	pas=10;
 int 	facteur=1;
 
+void 	fdessinfractale(t_display *display, int zoom, int Xrepereinit, int Yrepereinit, double paramCx, double paramCy);
+
+int Xinit, Yinit;
+double Xrepere, Yrepere, Zx, Zy, Cx, Cy, copie;
+int n;
+SDL_Rect position;
+
 
 
 static int	manage_mouse_event(SDL_Event *event, t_display *display)

@@ -72,4 +72,10 @@ int		undo(t_display *display);
 int		redo(t_display *display);
 int	 	rot(t_display *display);
 
+int Xinit, Yinit;
+int n;
+double Xrepere, Yrepere, Zx, Zy, Cx, Cy, copie;
+SDL_Rect position;
+
+
 #endif /* !DISPLAY_H_ */

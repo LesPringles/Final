@@ -1050,6 +1050,16 @@ void Rotate(GtkWidget* widget, gpointer data)
 			rotate_surface(display.screen, -90.0);*/
 			rotate_surface(display.screen, 90.0);
 			}
+	else if(strcmp(fonction, "Horizontal")==0)
+			{
+
+			}
+	else if(strcmp(fonction, "Vertical")==0)
+			{
+
+			}
+
+
 	
 			
 }

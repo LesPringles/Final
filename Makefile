@@ -15,6 +15,7 @@ SRCS =	  ./sources/interface.c	\
 	  ./sources/print_circle.c	\
 	  ./sources/print_disc.c	\
 	  ./sources/print_ellipse.c	\
+	  ./sources/etoiles.c		\
 	  ./sources/gomme.c			\
 	  ./sources/do_action.c		\
 	  ./sources/save.c			\

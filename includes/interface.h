@@ -38,6 +38,7 @@ void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
 void quit();
 void Rotate();
+void Fractales(GtkWidget* widget, gpointer data);
 void ZoomIN();
 void ZoomOUT();
 void Lumi();

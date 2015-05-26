@@ -5,6 +5,17 @@
 
 int		rotate_surface(t_display *display);
 
+int 	Xrepereinit=0, Yrepereinit=0;
+int 	nfractale=0;
+int 	nfractalemax=4;
+double 	parametreC[4*2]={0,0,-0.7927,0.1609,0.32,0.043,-0.0986,-0.65186};
+double 	paramCx, paramCy;
+//-Apparence de la fractale (Ces variables peuvent être modifiées)
+int 	pas=10;
+int 	facteur=1;
+
+
+
 static int	manage_mouse_event(SDL_Event *event, t_display *display)
 {
   (void)display;
@@ -75,7 +86,9 @@ static int	manage_key_event(SDL_Event *event, t_display *display)
       change_color(display);
       break;
     case SDLK_t:
-      //TODO Changerla taille du pinceau
+      fdessinfractale(display, 1, 0, 0, 0, 0);
+
+	  {Xrepereinit=0;Yrepereinit=0;facteur=1;if(nfractale<=nfractalemax){nfractale=nfractale+2;}else{nfractale=0;};fdessinfractale(display, facteur,Xrepereinit,Yrepereinit,parametreC[nfractale],parametreC[nfractale+1]);};
       break;
 	case SDLK_r:
 	 if (new(display->screen) == -1)

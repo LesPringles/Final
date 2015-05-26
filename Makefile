@@ -25,7 +25,8 @@ SRCS =	  ./sources/interface.c	\
 	  ./sources/convolution.c	\
 	  ./sources/tracing.c   	\
 	  ./sources/fill_pot.c		\
-	./sources/get_color.c		\
+	  ./sources/get_color.c		\
+	  ./sources/fractales.c
 
 OBJS = $(SRCS:.c=.o)
 

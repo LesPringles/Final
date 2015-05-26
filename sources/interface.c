@@ -6,7 +6,7 @@ int 	rotate_surface(SDL_Surface *surf, double angle);
 int 	zoom_surface(SDL_Surface *surf, double zoom);
 
 
-
+int borderonly=0;
 
 
 static GtkWidget *pRadioLabel;
@@ -929,6 +929,7 @@ void Rotate()
     pos_0.y = 0;
 
 	rotate_surface(display.screen, -90.0);
+
 
 	add_layer(&display.layers, display.screen, &pos_0);
 

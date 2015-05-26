@@ -5,25 +5,26 @@ SDL += -lSDL -lSDL_mixer -lSDL_gfx -lm
 
 EXEC=apero
 
-SRCS =	./sources/interface.c		\
-	./sources/layers.c		\
-	./sources/sdl_init.c		\
-	./sources/print_pixel.c		\
-	./sources/print_ligne.c		\
-	./sources/print_square.c	\
-	./sources/print_rect.c		\
-	./sources/print_circle.c	\
-	./sources/print_disc.c		\
-	./sources/print_ellipse.c	\
-	./sources/gomme.c		\
-	./sources/do_action.c		\
-	./sources/save.c		\
-	./sources/new.c			\
-	./sources/rotation.c 		\
-	./sources/zoom.c 		\
-	./sources/filtres.c		\
-	./sources/tracing.c		\
-	./sources/fill_pot.c		\
+SRCS =	  ./sources/interface.c	\
+	  ./sources/layers.c		\
+	  ./sources/sdl_init.c		\
+	  ./sources/print_pixel.c	\
+	  ./sources/print_ligne.c	\
+	  ./sources/print_square.c	\
+	  ./sources/print_rect.c	\
+	  ./sources/print_circle.c	\
+	  ./sources/print_disc.c	\
+	  ./sources/print_ellipse.c	\
+	  ./sources/gomme.c			\
+	  ./sources/do_action.c		\
+	  ./sources/save.c			\
+	  ./sources/new.c			\
+	  ./sources/rotation.c 		\
+	  ./sources/zoom.c 			\
+	  ./sources/filtres.c		\
+	  ./sources/convolution.c	\
+	  ./sources/tracing.c   	\
+	  ./sources/fill_pot.c		\
 	./sources/get_color.c		\
 
 OBJS = $(SRCS:.c=.o)

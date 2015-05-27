@@ -5,8 +5,11 @@ void change_color(GtkWidget* widget, gpointer data);
 int 	rotate_surface(SDL_Surface *surf, double angle);
 int 	zoom_surface(SDL_Surface *surf, double zoom);
 
+void fdessinfractale(t_display *display, int zoom, int Xrepereinit, int Yrepereinit, double paramCx, double paramCy);
+void fractale(t_display *display, int x1, int y1, int x2, int y2, int level, int col);
 
-int borderonly=0;
+
+
 
 
 static GtkWidget *pRadioLabel;
@@ -30,7 +33,7 @@ int main(int argc, char **argv)
   SDL_Rect	pos;
 
   display.layers = NULL;
-  display.action = PRINT_PIXEL_CARRE;
+  display.action = PRINT_PIXEL_ROND;
   display.button = RELEASED;
   SDL_Init(SDL_INIT_VIDEO);
 
@@ -388,6 +391,11 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Etoiles");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
+
 	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Gomme");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
@@ -545,7 +553,42 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 		/* ETAPE 6*/
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
 
-	/** Sixieme sous-menu **/
+	/** Sixieme sous-menu**/
+		/* ETAPE 2*/
+	pMenu = gtk_menu_new();
+		/* ETAPE 3*/
+	pMenuItem = gtk_menu_item_new_with_label( "Mandelbrot's Fractal");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label("Julia's Fractal");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Julia's Fractal II");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Julia's Fractal : Spiral Out");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
+
+	pMenuItem = gtk_menu_item_new_with_label( "Flocon");
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
+	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
+
+
+
+
+		/* ETAPE 4*/
+	pMenuItem = gtk_menu_item_new_with_label("Fractales");
+		/* ETAPE 5*/
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(pMenuItem), pMenu);
+		/* ETAPE 6*/
+	gtk_menu_shell_append(GTK_MENU_SHELL(pMenuBar), pMenuItem);
+
+
+	/** Septieme sous-menu **/
 	  /* ETAPE 2 */
 	pMenu = gtk_menu_new();
  /* ETAPE 3 */
@@ -718,10 +761,12 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 6;
 	else if(strcmp(fonction, "Ellipse")==0)
 					display.action = 7;
-	else if(strcmp(fonction, "Gomme")==0)
+	else if(strcmp(fonction, "Etoiles")==0)
 					display.action = 8;
-	else if(strcmp(fonction, "FillPot")==0)
+	else if(strcmp(fonction, "Gomme")==0)
 					display.action = 9;
+	else if(strcmp(fonction, "FillPot")==0)
+					display.action = 10;
 
 }
 
@@ -1061,6 +1106,44 @@ void Rotate(GtkWidget* widget, gpointer data)
 	else if(strcmp(fonction, "Vertical")==0)
 			{
 				rotation_verticale(display);
+			}
+
+
+	
+			
+}
+
+#define LEVEL 5 
+
+void Fractales(GtkWidget* widget, gpointer data)
+{
+	(void)data;
+	const char *ffractale;
+	ffractale = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
+
+
+	if(strcmp(ffractale, "Mandelbrot's Fractal")==0)
+			{
+				fdessinfractale(&display, 1, 0, 0, 0, 0);	
+			}
+	else if(strcmp(ffractale, "Julia's Fractal")==0)
+			{
+				fdessinfractale(&display, 1, 0, 0, -0.7927, 0.1609);	
+			}
+	else if(strcmp(ffractale, "Julia's Fractal II")==0)
+			{
+				fdessinfractale(&display, 1, 0, 0, 0.32, 0.043);	
+			}
+	else if(strcmp(ffractale, "Julia's Fractal : Spiral Out")==0)
+			{
+				fdessinfractale(&display, 1, 0, 0, -0.0986, -0.65186);	
+			}
+	else if(strcmp(ffractale, "Flocon")==0)
+			{
+				fractale(&display, 320, 60, 520, 340, LEVEL, 0);
+    			fractale(&display, 520, 340, 120, 340, LEVEL, 0);
+    			fractale(&display, 120, 340, 320, 60, LEVEL, 0);
+				SDL_Flip(display.screen);
 			}
 
 

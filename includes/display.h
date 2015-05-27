@@ -16,6 +16,7 @@ typedef enum	e_current_action
     PRINT_CIRCLE,
     PRINT_DISC,
     PRINT_ELLIPSE,
+	PRINT_ETOILES,
     PRINT_GOMME,
     FILL_POT,
     PICK_COLOR

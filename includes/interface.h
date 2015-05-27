@@ -40,6 +40,7 @@ void quit();
 void Rotate();
 void rotation_horizontale(t_display display);
 void rotation_verticale(t_display display);
+void Fractales(GtkWidget* widget, gpointer data);
 void ZoomIN();
 void ZoomOUT();
 void Lumi();

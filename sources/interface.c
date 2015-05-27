@@ -1022,9 +1022,6 @@ void PickColor()
     pos_0.x = 0;
     pos_0.y = 0;
 
-	rotate_surface(display.screen, -90.0);
-
-
 	add_layer(&display.layers, display.screen, &pos_0);
   getColorFromPalette(&display, 0);
 }
@@ -1052,11 +1049,18 @@ void Rotate(GtkWidget* widget, gpointer data)
 			}
 	else if(strcmp(fonction, "Horizontal")==0)
 			{
+				rotation_horizontale(display);
+				SDL_Rect		pos_0;
 
+  		  pos_0.x = 0;
+  			 pos_0.y = 0;
+
+				add_layer(&display.layers, display.screen, &pos_0);
+ 				 getColorFromPalette(&display, 0);
 			}
 	else if(strcmp(fonction, "Vertical")==0)
 			{
-
+				rotation_verticale(display);
 			}
 
 

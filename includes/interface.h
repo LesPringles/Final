@@ -38,6 +38,8 @@ void Save(GtkWidget* widget, GtkWidget* file_selection);
 void Open(GtkWidget* widget, GtkWidget* file_selection);
 void quit();
 void Rotate();
+void rotation_horizontale(t_display display);
+void rotation_verticale(t_display display);
 void ZoomIN();
 void ZoomOUT();
 void Lumi();

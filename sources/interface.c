@@ -37,7 +37,6 @@ int main(int argc, char **argv)
   display.action = PRINT_PIXEL_ROND;
   display.button = RELEASED;
   SDL_Init(SDL_INIT_VIDEO);
-	TTF_Init();
 
   display.screen = SDL_SetVideoMode(WINX, WINY, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
@@ -84,7 +83,6 @@ int main(int argc, char **argv)
 	pthread_join(th0, NULL);
 	pthread_join(th1, NULL);
 	
-	TTF_Quit();
 
 	SDL_Quit();
 	 return EXIT_SUCCESS;
@@ -577,7 +575,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Flocon");
+	pMenuItem = gtk_menu_item_new_with_label( "Koch Snowflake");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Fractales), NULL);
 
@@ -585,7 +583,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 
 
 		/* ETAPE 4*/
-	pMenuItem = gtk_menu_item_new_with_label("Fractales");
+	pMenuItem = gtk_menu_item_new_with_label("Fractals");
 		/* ETAPE 5*/
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(pMenuItem), pMenu);
 		/* ETAPE 6*/
@@ -1157,7 +1155,7 @@ void Fractales(GtkWidget* widget, gpointer data)
 			{
 				fdessinfractale(&display, 1, 0, 0, -0.0986, -0.65186);	
 			}
-	else if(strcmp(ffractale, "Flocon")==0)
+	else if(strcmp(ffractale, "Koch Snowflake")==0)
 			{
 				fractale(&display, 320, 60, 520, 340, LEVEL, 0);
     			fractale(&display, 520, 340, 120, 340, LEVEL, 0);

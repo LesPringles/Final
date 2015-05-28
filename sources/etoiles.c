@@ -13,7 +13,8 @@
 void dot(t_display *display, int x, int y, Uint32 color)
 {
     SDL_Rect r = {x, y, 2, 2};
-    SDL_FillRect(display->screen, &r, display->current_color);
+	color = display->current_color;
+    SDL_FillRect(display->screen, &r, color);
 }
 
 void drawLine(t_display *display, int x1, int y1, int x2, int y2, Uint32 color)
@@ -23,10 +24,11 @@ void drawLine(t_display *display, int x1, int y1, int x2, int y2, Uint32 color)
     int m = MAX(ABS(inc_x), ABS(inc_y));
     inc_x /= m;
     inc_y /= m;
+	color = display->current_color;
  
     for(; m >= 0; m--)
     {
-        dot(display, (unsigned int)x, (unsigned int)y, display->current_color);
+        dot(display, (unsigned int)x, (unsigned int)y, color);
         x += inc_x;
         y += inc_y;
     }
@@ -64,7 +66,7 @@ static int		set_start_pos(SDL_Rect **p, Uint16 x, Uint16 y)
   return 0;
 }
 
-static int		display_etoiles(t_display *display, SDL_Rect *pos, int x1, int y1, int x2, int y2)
+static int		display_etoiles(t_display *display, SDL_Rect *pos/*, int x1, int y1, int x2, int y2*/)
 {
   SDL_Surface		*square;
 
@@ -140,10 +142,10 @@ int			print_etoiles(t_display *display, void *param)
 
 
       return display_etoiles(display,
-			    ((pos.x > start_pos->x) ? &pos : start_pos),
+			    ((pos.x > start_pos->x) ? &pos : start_pos)/*,
 			    start_pos->x,
 			    start_pos->y,
 				200,
-				200);
+				200*/);
 
 }

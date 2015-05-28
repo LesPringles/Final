@@ -73,6 +73,9 @@ int		undo(t_display *display);
 int		redo(t_display *display);
 int	 	rot(t_display *display);
 
+void drawLine(t_display *display, int x1, int y1, int x2, int y2, Uint32 color);
+
+
 int Xinit, Yinit;
 int n;
 double Xrepere, Yrepere, Zx, Zy, Cx, Cy, copie;

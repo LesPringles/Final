@@ -10,7 +10,7 @@ static int		set_start_pos(SDL_Rect **p, Uint16 x, Uint16 y)
   return 0;
 }
 
-static int		display_rect(t_display *display, SDL_Rect *pos, int w, int h)
+static int display_rect(t_display *display, SDL_Rect *pos, int w, int h)
 {
   SDL_Surface		*square;
 

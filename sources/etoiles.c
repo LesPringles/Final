@@ -12,8 +12,8 @@
 
 void dot(t_display *display, int x, int y, Uint32 color)
 {
-    SDL_Rect r = {x, y, 1, 1};
-    SDL_FillRect(display->screen, &r, color);
+    SDL_Rect r = {x, y, 2, 2};
+    SDL_FillRect(display->screen, &r, display->current_color);
 }
 
 void drawLine(t_display *display, int x1, int y1, int x2, int y2, Uint32 color)
@@ -26,7 +26,7 @@ void drawLine(t_display *display, int x1, int y1, int x2, int y2, Uint32 color)
  
     for(; m >= 0; m--)
     {
-        dot(display, (unsigned int)x, (unsigned int)y, color);
+        dot(display, (unsigned int)x, (unsigned int)y, display->current_color);
         x += inc_x;
         y += inc_y;
     }
@@ -43,10 +43,10 @@ void etoiles(t_display *display, int x1, int y1, int x2, int y2, int level, Uint
         int y5 = (y1 + 2*y2)/3;
         int x4 = x3 + (x5 - x3)/2 + (y5 - y3)*SQRT_3/2;
         int y4 = y3 - (x5 - x3)*SQRT_3/2 + (y5 - y3)/2;
-        etoiles(display, x1, y1, x3, y3, level-1, coul);
-        etoiles(display, x3, y3, x4, y4, level-1, coul);
-        etoiles(display, x4, y4, x5, y5, level-1, coul);
-        etoiles(display, x5, y5, x2, y2, level-1, coul);
+        etoiles(display, x1, y1, x3, y3, level-1, display->current_color);
+        etoiles(display, x3, y3, x4, y4, level-1, display->current_color);
+        etoiles(display, x4, y4, x5, y5, level-1, display->current_color);
+        etoiles(display, x5, y5, x2, y2, level-1, display->current_color);
     }
     else
     {
@@ -71,9 +71,14 @@ static int		display_etoiles(t_display *display, SDL_Rect *pos, int x1, int y1, i
   if ((square = SDL_CreateRGBSurface(0, 0, 0, 32, 0, 0, 0, 0)) == NULL)
     return -1;
 
+  /*etoiles(display, WINX/2, 		WINY/8,			WINX*13/16,	WINY*17/24, LEVEL, display->current_color);
+  etoiles(display, WINX*13/16, 	WINY*17/24, 	WINX*3/16, 	WINY*17/24, LEVEL, display->current_color);
+  etoiles(display, WINX*3/16, 	WINY*17/24, 	WINX/2, 	WINY/8, LEVEL, display->current_color);*/
+
   etoiles(display, WINX/2, 		WINY/8,			WINX*13/16,	WINY*17/24, LEVEL, display->current_color);
   etoiles(display, WINX*13/16, 	WINY*17/24, 	WINX*3/16, 	WINY*17/24, LEVEL, display->current_color);
   etoiles(display, WINX*3/16, 	WINY*17/24, 	WINX/2, 	WINY/8, LEVEL, display->current_color);
+
 
   if (SDL_BlitSurface(square, NULL, display->screen, pos) == -1)
     return -1;

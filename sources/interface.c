@@ -1,15 +1,16 @@
 #include "../includes/interface.h"
 #define UTF8(string) g_locale_to_utf8(string, -1, NULL, NULL, NULL)
 
+
 void change_color(GtkWidget* widget, gpointer data);
 int 	rotate_surface(SDL_Surface *surf, double angle);
 int 	zoom_surface(SDL_Surface *surf, double zoom);
 
 void fdessinfractale(t_display *display, int zoom, int Xrepereinit, int Yrepereinit, double paramCx, double paramCy);
 void fractale(t_display *display, int x1, int y1, int x2, int y2, int level, int col);
-
-
-
+void on_copier_button(GtkWidget *pButton, gpointer data);
+void on_activate_entry(GtkWidget *pEntry, gpointer data);
+void Text();
 
 
 static GtkWidget *pRadioLabel;
@@ -36,13 +37,14 @@ int main(int argc, char **argv)
   display.action = PRINT_PIXEL_ROND;
   display.button = RELEASED;
   SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
 
   display.screen = SDL_SetVideoMode(WINX, WINY, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
  	new(display.screen);
 	SDL_WM_SetCaption("Apero", NULL);
-
-  pos.x = 0;
+ 
+ 	pos.x = 0;
   pos.y = 0;
   add_layer(&display.layers, display.screen, &pos);
 
@@ -81,6 +83,8 @@ int main(int argc, char **argv)
 	pthread_create(&th1, NULL, run, NULL);
 	pthread_join(th0, NULL);
 	pthread_join(th1, NULL);
+	
+	TTF_Quit();
 
 	SDL_Quit();
 	 return EXIT_SUCCESS;
@@ -153,8 +157,8 @@ GtkWidget *pQuestion;
 		GTK_DIALOG_MODAL,
 		GTK_MESSAGE_QUESTION,
 		GTK_BUTTONS_YES_NO,
-		"Voulez vous vraiment\n"
-		"quitter le programme?");
+		"Do you want to leave\n"
+		"the program?");
 
 		switch(gtk_dialog_run(GTK_DIALOG(pQuestion)))
 		{
@@ -181,7 +185,7 @@ void OnAbout(GtkWidget* widget, gpointer data)
 			GTK_BUTTONS_OK,
 			"Programme realise par Les Pringles\n"
 			"Pour plus d'information:\n"
-			"http://gtk.developpez.com");
+			"https://github.com/LesPringles/Final");
 
 	gtk_dialog_run(GTK_DIALOG(pAbout));
 
@@ -218,7 +222,7 @@ gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		-1);
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_DIALOG_INFO,
-		"Luminosité",
+		"Brightness",
 		NULL,
 		G_CALLBACK(Lumi),
 		NULL,
@@ -254,7 +258,7 @@ gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 
 	gtk_toolbar_insert_stock(GTK_TOOLBAR(pToolbar),
 		GTK_STOCK_QUIT,
-		"Fermer",
+		"Close",
 		NULL,
 		G_CALLBACK(OnQuitter),
 		NULL,
@@ -343,12 +347,12 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	 	/*ETAPE 2*/
 	submenu = gtk_menu_new();
 		/*ETAPE 3*/
-	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Rond");
+	pMenuItem = gtk_radio_menu_item_new_with_label(NULL, "Round");
 	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
-	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Carre");
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Square");
 	gtk_menu_shell_append(GTK_MENU_SHELL(submenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
@@ -391,12 +395,12 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
-	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Etoiles");
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Star");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
 
-	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Gomme");
+	pMenuItem = gtk_radio_menu_item_new_with_label(pList2, "Eraser");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	pList2 = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(pMenuItem));
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Function), NULL);
@@ -492,11 +496,11 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterBW), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label("FilterG");
+	pMenuItem = gtk_menu_item_new_with_label("FilterGreen");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterG), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "FilterInv");
+	pMenuItem = gtk_menu_item_new_with_label( "FilterNegative");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterInv), NULL);
 
@@ -512,11 +516,11 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterRed), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "FilterLum+");
+	pMenuItem = gtk_menu_item_new_with_label( "FilterBright+");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterLumPlus), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "FilterLum-");
+	pMenuItem = gtk_menu_item_new_with_label( "FilterBright-");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FilterLumMoins), NULL);
 
@@ -524,23 +528,23 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Detec), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Repoussage");
+	pMenuItem = gtk_menu_item_new_with_label( "Bumpmaps");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Repoussage), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Flou");
+	pMenuItem = gtk_menu_item_new_with_label( "Blur");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Flou), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Gaufrage");
+	pMenuItem = gtk_menu_item_new_with_label( "Embossing");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(Gaufrage), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Augmenter Contraste");
+	pMenuItem = gtk_menu_item_new_with_label( "Increase Contrast");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(AugContraste), NULL);
 
-	pMenuItem = gtk_menu_item_new_with_label( "Flou Gaussien");
+	pMenuItem = gtk_menu_item_new_with_label( "Gaussian Blur");
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(FlouGaussien), NULL);
 
@@ -592,7 +596,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 	  /* ETAPE 2 */
 	pMenu = gtk_menu_new();
  /* ETAPE 3 */
-	pMenuItem = gtk_menu_item_new_with_label("A propos de...");
+	pMenuItem = gtk_menu_item_new_with_label("About...");
 	g_signal_connect(G_OBJECT(pMenuItem), "activate", G_CALLBACK(OnAbout), (GtkWidget*) pWindow);
 	gtk_menu_shell_append(GTK_MENU_SHELL(pMenu), pMenuItem);
 	  /* ETAPE 4 */
@@ -608,7 +612,7 @@ GtkWidget* CreateMenu(GtkWidget* pWindow)
 void file_selection_save()
 {
 	GtkWidget *selection;
-	selection = gtk_file_selection_new( g_locale_to_utf8( "Selectionnez un fichier", -1, NULL, NULL, NULL));
+	selection = gtk_file_selection_new( g_locale_to_utf8( "Select file", -1, NULL, NULL, NULL));
 	gtk_widget_show(selection);
 
 	gtk_window_set_modal(GTK_WINDOW(selection), TRUE);
@@ -621,7 +625,7 @@ void file_selection_save()
 void file_selection_load()
 {
 	GtkWidget *selection;
-	selection = gtk_file_selection_new( g_locale_to_utf8( "Selectionnez un fichier", -1, NULL, NULL, NULL));
+	selection = gtk_file_selection_new( g_locale_to_utf8( "Select file", -1, NULL, NULL, NULL));
 	gtk_widget_show(selection);
 
 	gtk_window_set_modal(GTK_WINDOW(selection), TRUE);
@@ -745,9 +749,9 @@ void Function(GtkWidget* widget, gpointer data)
 const char *fonction;
 fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 
-	if(strcmp(fonction, "Carre")==0)
+	if(strcmp(fonction, "Squre")==0)
 					display.action = 0;	
-	else if(strcmp(fonction, "Rond")==0)
+	else if(strcmp(fonction, "Round")==0)
 					display.action = 1;
 	else if(strcmp(fonction, "Line")==0)
 					display.action = 2;
@@ -761,9 +765,9 @@ fonction = gtk_label_get_label(GTK_LABEL(GTK_BIN(widget)->child));
 					display.action = 6;
 	else if(strcmp(fonction, "Ellipse")==0)
 					display.action = 7;
-	else if(strcmp(fonction, "Etoiles")==0)
+	else if(strcmp(fonction, "Star")==0)
 					display.action = 8;
-	else if(strcmp(fonction, "Gomme")==0)
+	else if(strcmp(fonction, "Eraser")==0)
 					display.action = 9;
 	else if(strcmp(fonction, "FillPot")==0)
 					display.action = 10;
@@ -1019,7 +1023,11 @@ void OnScrollbarChange(GtkWidget *pWidget, gpointer data)
 {
    gchar* sLabel;
    gint iValue;
- 
+ /*		SDL_Rect		pos_0;
+
+    	pos_0.x = 0;
+    	pos_0.y = 0;*/
+
    /* Récupération de la valeur de la scrollbar */
    iValue = gtk_range_get_value(GTK_RANGE(pWidget));
 	 value = gtk_range_get_value(GTK_RANGE(pWidget));
@@ -1028,6 +1036,17 @@ void OnScrollbarChange(GtkWidget *pWidget, gpointer data)
    sLabel = g_strdup_printf("%d", iValue);
    /* Modification du label */
    gtk_label_set_text(GTK_LABEL(data), sLabel);
+	 /*Update*/
+/*	 	if(value > 50)
+	{
+	filtre_bright_p(display, value);
+	add_layer(&display.layers, display.screen, &pos_0);
+	}
+	else if(value < 50)
+	{
+	filtre_bright_m(display, value);
+	add_layer(&display.layers, display.screen, &pos_0);
+	}*/
    /* Liberation memoire */
    g_free(sLabel);
 }
@@ -1146,9 +1165,6 @@ void Fractales(GtkWidget* widget, gpointer data)
 				SDL_Flip(display.screen);
 			}
 
-
-	
-			
 }
 
 void ZoomIN()

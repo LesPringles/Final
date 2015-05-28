@@ -22,7 +22,7 @@ static const Uint32	colors[] =
     //    A   R   G   B
     // 0x XX  XX  XX  XX
 
-    0x00000000, // BLACK
+    0x00000001, // BLACK
     0x001111ee, // BLUE
     0x0011ee11, // GREEN
     0x00eeee11, // YELLOW
